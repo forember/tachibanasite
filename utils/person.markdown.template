@@ -1,0 +1,57 @@
+%# vim: set filetype=markdown :
+%'''
+%   File:   utils/configIniUtils.py
+%   Author: Chris McKinney
+%   Edited: Mar 01 2016
+%   Editor: Chris McKinney
+%
+%   Description:
+%
+%   Default person template.
+%
+%   License:
+%
+%   Copyright 2016 Chris McKinney
+%
+%   Licensed under the Apache License, Version 2.0 (the "License"); you may not
+%   use this file except in compliance with the License.  You may obtain a copy
+%   of the License at
+%
+%       http://www.apache.org/licenses/LICENSE-2.0
+%
+%   Unless required by applicable law or agreed to in writing, software
+%   distributed under the License is distributed on an "AS IS" BASIS,
+%   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%   See the License for the specific language governing permissions and
+%   limitations under the License.
+%'''
+
+<div class="person" markdown="1">
+
+%if photo_url:
+![Photo of {{name}}][{{name}} Photo]
+
+[{{name}} Photo]: {{!photo_url}} "{{name}}" {.shadow .sidephoto .person-photo}
+%end
+
+%if website:
+[{{name}} Name]: {{website}} "{{name}}'s website" {target=_blank}
+
+%if title:
+[{{name}}][{{name}} Name] &mdash; {{title}}  {.person-name}
+%else:
+[{{name}}][{{name}} Name] {.person-name}
+%end
+%elif title:
+{{name}} &mdash; {{title}}  {.person-name}
+%else:
+{{name}} {.person-name}
+%end
+--------------------------
+
+%if aboutme:
+{{!aboutme}}
+%end
+
+</div>
+

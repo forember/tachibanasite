@@ -1,0 +1,46 @@
+'''
+    File:   utils/configIniUtils.py
+    Author: Chris McKinney
+    Edited: Mar 01 2016
+    Editor: Chris McKinney
+
+    Description:
+
+    Utilities for working with the config.ini files.
+
+    License:
+
+    Copyright 2016 Chris McKinney
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not
+    use this file except in compliance with the License.  You may obtain a copy
+    of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+'''
+
+import os
+from os.path import dirname, realpath
+installPath = dirname(dirname(realpath(__file__)))
+configPaths = [os.path.join(installPath, 'common/config.ini'),
+        realpath(os.path.join(installPath, '../common/config.ini')),
+        'config.ini']
+
+def get_config():
+    import ConfigParser
+    config = ConfigParser.ConfigParser()
+    config.read(configPaths)
+    return config
+
+def get_local_host_path():
+    config = get_config()
+    lhp = config.get('TachibanaSite', 'local_host_path')
+    if lhp.startswith('"') and lhp.endswith('"'):
+        lhp = lhp[1:-1]
+    return lhp
