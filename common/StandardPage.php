@@ -2,12 +2,17 @@
 /*
     File:   common/StandardPage.php
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: Apr 06 2016
     Editor: Chris McKinney
 
     Description:
 
     The default standard page for a TachibanaSite webpage.
+
+    Edit History:
+
+    0.4.6   - Added jQuery support.
+            - Added version.
 
     License:
 
@@ -79,6 +84,7 @@ $purpleTheme = array(
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?=loadTitle('navlist.markdown',
                 get_config_option('site_title'))?></title>
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <link rel="stylesheet" type="text/css"
                 href="<?=$installURL?>/theme/markdown-content.css" />
         <link rel="stylesheet" type="text/css"
@@ -121,6 +127,9 @@ $purpleTheme = array(
             </div>
             <div class="clearer"></div>
             <div id="footer"><!-- Start Footer -->
+                <div style="float:right;">
+                    <p>TachibanaSite v<?=get_config_option('version')?></p>
+                </div>
                 <?=mdTplCommon('copyright.markdown')?>
                 <div id="breadcrumbcontainer">
                                         <!-- Start the breadcrumb wrapper -->
