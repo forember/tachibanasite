@@ -2,12 +2,16 @@
 /*
     File:   blank/index.php
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: May 22 2016
     Editor: Chris McKinney
 
     Description:
 
     Test for including the standard page without interference from content.
+
+    Edit History:
+
+    0.5.22  - Moved into pages directory.
 
     License:
 
@@ -25,5 +29,5 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-include "../utils/FindStandardPage.php";
+include "../../utils/FindStandardPage.php";
 ?>

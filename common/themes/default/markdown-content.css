@@ -1,12 +1,16 @@
 /*
     File:   common/themes/default/markdown-content.css
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: May 22 2016
     Editor: Chris McKinney
 
     Description:
 
     Theme for Markdown content on pages.
+
+    Edit History:
+
+    0.5.22  - Added input fields.
 
     License:
 
@@ -71,6 +75,16 @@ h1, h2, h3 {
 
 .markdown-content abbr {
     text-decoration: underline dotted black;
+}
+
+/* Input fields. */
+.markdown-content input, .markdown-content textarea {
+    background-color: #112;
+    color: #ffd;
+}
+
+.markdown-content input:invalid, .markdown-content textarea:invalid {
+    background-color: #211;
 }
 
 /* Box shadows. */

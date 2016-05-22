@@ -7,6 +7,10 @@ Server software for <http://tachibanatech.com/chris/home/>.
 
 # Version History
 
+## 0.5.22 A
+
+-   Added mail support.
+
 ## 0.5.21
 
 -   Moved theme presets from the standard page into the theme.

@@ -30,28 +30,32 @@
     limitations under the License.
  */
 
-function deobfuscateEmail(t) {
+function deobfuscateEmail(t, mailto) {
     t = decodeURIComponent(t);
-    s = "";
+    s = '';
     for (var i = 0; i < t.length; ++i) {
         var c = t.charCodeAt(i);
-        s += String.fromCharCode(c ^ 0x1f);
+        if (mailto) {
+            s += String.fromCharCode(c ^ 0x1f);
+        } else {
+            s += '&#' + (c ^ 0x1f) + ';<span style="display:none">@</span>';
+        }
     }
     return s;
 }
 
 window.loadActions.push(function() {
-    var emailRegex = /^@@([jkhinolmbc]{4})<code>([%\/_.\-a-zA-Z0-9]+)<\/code>\1@@$/
+    var emailRegex = /^@@([jkhinolmbc]{4})<code>([%\/_.\-a-zA-Z0-9]+)<\/code>\1@@$/;
     $('a').each(function() {
         var href = $(this).attr('href');
         var hrefm = emailRegex.exec(href);
         if (hrefm != null) {
-            $(this).attr('href', deobfuscateEmail(hrefm[2]));
+            $(this).attr('href', deobfuscateEmail(hrefm[2], true));
         }
         var html = $(this).html();
         var htmlm = emailRegex.exec(html);
         if (htmlm != null) {
-            $(this).text(deobfuscateEmail(htmlm[2]));
+            $(this).html(deobfuscateEmail(htmlm[2], false));
         }
     });
 });
