@@ -2,12 +2,16 @@
 /*
     File:   utils/ConfigIniUtils.php
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: May 21 2016
     Editor: Chris McKinney
 
     Description:
 
     Utilities for working with the config.ini files.
+
+    Edit History:
+
+    0.5.21  - Added section parsing.
 
     License:
 
@@ -27,26 +31,38 @@
  */
 
 // Read an option from a file.
-function get_config_file_option($filename, $key) {
-    if (file_exists($filename) && ($config = parse_ini_file($filename))
-        && array_key_exists($key, $config)) {
-        return $config[$key];
+function get_config_file_option($filename, $key, $section = false) {
+    if (file_exists($filename)
+            && ($config = parse_ini_file($filename, !!$section))) {
+        if ($section) {
+            if (array_key_exists($section, $config)
+                    && array_key_exists($key, $config[$section])) {
+                return $config[$section][$key];
+            }
+        } else {
+            if (array_key_exists($key, $config)) {
+                return $config[$key];
+            } else {
+                return false;
+            }
+        }
     } else {
         return false;
     }
 }
 
 // Read an option from the usual files.
-function get_config_option($key) {
+function get_config_option($key, $section = false) {
     $sitePath = realpath(__DIR__ . '/../..');
     $installPath = realpath(__DIR__ . '/..');
-    if (false !== ($val = get_config_file_option('config.ini', $key))) {
+    if (false !== ($val = get_config_file_option('config.ini', $key,
+            $section))) {
         return $val;
     } else if (false !== ($val = get_config_file_option(
-        "$sitePath/common/config.ini", $key))) {
+            "$sitePath/common/config.ini", $key, $section))) {
         return $val;
     } else if (false !== ($val = get_config_file_option(
-        "$installPath/common/config.ini", $key))) {
+            "$installPath/common/config.ini", $key, $section))) {
         return $val;
     } else {
         return false;

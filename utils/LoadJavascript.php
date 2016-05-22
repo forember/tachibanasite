@@ -1,17 +1,17 @@
 <?php
 /*
-    File:   utils/FindStandardPage.php
+    File:   utils/LoadsJavascript.php
     Author: Chris McKinney
     Edited: May 21 2016
     Editor: Chris McKinney
 
     Description:
 
-    Find and include the standard page.
+    Utilities to load javascript for the whole site.
 
     Edit History:
 
-    0.5.21  - Moved the standard page into the theme.
+    0.5.21  - Created to handle new spread-out js.
 
     License:
 
@@ -30,12 +30,21 @@
     limitations under the License.
  */
 
-// Include utilitues.
-include_once 'Theme.php';
-// Change to the directory of the current page.
-chdir(dirname($_SERVER['SCRIPT_FILENAME']));
-// Find the standard page.
-$stdPagePath = get_theme_path_wfallback('StandardPage.php');
-// Include the standard page.
-include "$stdPagePath";
+include_once 'ConfigIniUtils.php';
+
+function get_js_url_array() {
+    $installURL = get_config_option('install_url');
+    $urls = array(
+        200 => "$installURL/utils/utils.js",
+        800 => get_theme_url('theme.js')
+    );
+    return $urls;
+}
+
+function echo_script_tags() {
+    foreach (get_js_url_array() as $i => $url) {
+        echo "<script type='text/javascript' src='$url'></script>\n";
+    }
+}
+
 ?>

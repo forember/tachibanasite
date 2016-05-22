@@ -2,12 +2,16 @@
 /*
     File:   utils/MarkdownUtils.php
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: May 21 2016
     Editor: Chris McKinney
 
     Description:
 
     Utilities for working with Markdown and template files.
+
+    Edit History:
+
+    0.5.21  - Added common override URL support.
 
     License:
 
@@ -30,6 +34,7 @@
 $installPath = realpath(__DIR__ . '/..');
 include_once "$installPath/php-markdown/Michelf/MarkdownExtra.inc.php";
 use \Michelf\MarkdownExtra;
+include_once 'ConfigIniUtils.php';
 
 // Process some text as Markdown.
 function mdText($text) {
@@ -54,6 +59,21 @@ function pathCommon($filename) {
     }
 }
 
+// Get a common override URL
+function urlCommon($filename) {
+    $sitePath = realpath(__DIR__ . '/../..');
+    $installPath = realpath(__DIR__ . '/..');
+    $installURL = get_config_option('install_url');
+    $siteURL = dirname($installURL);
+    if (file_exists($filename)) {
+        return $filename;
+    } else if (file_exists("$sitePath/common/$filename")) {
+        return "$siteURL/common/$filename";
+    } else {
+        return "$installURL/common/$filename";
+    }
+}
+
 // Process a common override file as Markdown, with fallback.
 function mdCommon($filename) {
     return md(pathCommon($filename));
@@ -66,7 +86,7 @@ function mdTpl($filename) {
     $arg2 = escapeshellarg(json_encode($_GET));
     $arg3 = escapeshellarg("$filename.template");
     echo "<!-- python $arg1 $arg2 $arg3 -->";
-    return mdText(shell_exec("python $arg1 $arg2 $arg3"));
+    return mdText(shell_exec("python $arg1 $arg2 $arg3 2>&1"));
 }
 
 // Process a common override file as a Markdown SimpleTemplate, with

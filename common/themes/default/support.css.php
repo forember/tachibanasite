@@ -3,14 +3,19 @@
 header('Content-Type: text/css');
 ?>
 /*
-    File:   theme/support.css.php
+    File:   common/themes/default/support.css.php
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: May 21 2016
     Editor: Chris McKinney
 
     Description:
 
     Support for theme for webpages. PHP for color arguments.
+
+    Edit History:
+
+    0.5.21  - Moved theme presets here from the standard page.
+            - Made image URLs relative.
 
     License:
 
@@ -29,28 +34,81 @@ header('Content-Type: text/css');
     limitations under the License.
  */
 /*<?php
-function define_var(&$var, $name, $default) {
+$presets = array(
+    'default' => array(
+        'bbc' => '#808080',
+        'cbc' => '#fff',
+        'hbc' => '#000',
+        'hfc' => '#fff',
+        'nbc' => '#282828'
+    ),
+    'red' => array(
+        'bbc' => '#866',
+        'cbc' => '#fff',
+        'hbc' => '#211',
+        'hfc' => '#dff',
+        'nbc' => '#453636'
+    ),
+    'green' => array(
+        'bbc' => '#464',
+        'cbc' => '#fff',
+        'hbc' => '#121',
+        'hfc' => '#ffd',
+        'nbc' => '#364536'
+    ),
+    'teal' => array(
+        'bbc' => '#446660',
+        'cbc' => '#fff',
+        'hbc' => '#122',
+        'hfc' => '#ffd',
+        'nbc' => '#364545'
+    ),
+    'blue' => array(
+        'bbc' => '#668',
+        'cbc' => '#fff',
+        'hbc' => '#112',
+        'hfc' => '#ffd',
+        'nbc' => '#363645'
+    ),
+    'purple' => array(
+        'bbc' => '#546',
+        'cbc' => '#fff',
+        'hbc' => '#212',
+        'hfc' => '#ffd',
+        'nbc' => '#453645'
+    )
+);
+
+if (array_key_exists('preset', $_GET)
+        && array_key_exists($_GET['preset'], $presets)) {
+    $presetName = $_GET['preset'];
+    echo "Loaded $presetName preset.\n";
+} else {
+    $presetName = 'default';
+    echo "Falling back to $presetName preset.\n";
+}
+
+function define_var(&$var, $name) {
+    global $presets, $presetName;
     if (array_key_exists($name, $_GET)) {
         $var = $_GET[$name];
+        echo "Custom var $name = $var\n";
     } else {
-        $var = $default;
+        $var = $presets[$presetName][$name];
+        echo "Preset var $name = $var\n";
     }
 }
 
-define_var($bodyBColor, 'bbc', '#808080');
-define_var($containerBColor, 'cbc', '#fff');
-define_var($headerBColor, 'hbc', '#000');
-define_var($headerFColor, 'hfc', '#fff');
-define_var($navfillBColor, 'nbc', '#282828');
-
-$installPath = realpath(__DIR__ . '/..');
-include_once "$installPath/utils/ConfigIniUtils.php";
-$installURL = get_config_option('install_url');
+define_var($bodyBColor, 'bbc');
+define_var($containerBColor, 'cbc');
+define_var($headerBColor, 'hbc');
+define_var($headerFColor, 'hfc');
+define_var($navfillBColor, 'nbc');
 ?>*/
 
 body {
     background-color: <?=$bodyBColor?>;
-    background-image: url(<?=$installURL?>/theme/images/body_grad.png);
+    background-image: url(images/body_grad.png);
     background-repeat: repeat-x;
     font-family: sans-serif;
     font-size: 12pt;
@@ -73,7 +131,7 @@ body {
 
 #pageHeader, div.sideHeader, #footer {
     background-color: <?=$headerBColor?>;
-    background-image: url(<?=$installURL?>/theme/images/header_top_grad.png);
+    background-image: url(images/header_top_grad.png);
     background-size: auto 40pt;
     background-repeat: repeat-x;
     color: <?=$headerFColor?>;

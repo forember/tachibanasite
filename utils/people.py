@@ -1,12 +1,16 @@
 '''
     File:   utils/people.py
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: May 21 2016
     Editor: Chris McKinney
 
     Description:
 
     Provides person objects and utilities.
+
+    Edit History:
+
+    0.5.21  - Added email obfuscation.
 
     License:
 
@@ -29,6 +33,7 @@ import os
 from os.path import dirname, realpath
 installPath = dirname(dirname(realpath(__file__)))
 import configIniUtils
+import re
 
 # File extensions. Revisit these periodically to sort common extensions first.
 ABOUTME_EXTENSIONS = ['.markdown', '', '.mdown', '.md', '.text', '.txt', '.html']
@@ -99,7 +104,31 @@ def make_person_url(host, about_loc, protocol=DEFAULT_PROTOCOL,
         # about_loc is a username.
         return '{}://{}/~{}/afrl/'.format(protocol, host, about_loc)
 
-def person(name, about_loc, host=HOST_TACHIBANA, title=None, website=None):
+email_obfuscation_counter = 1024
+email_re = re.compile('(mailto:)?[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+')
+
+def obfuscate_email(s):
+    global email_obfuscation_counter
+    import urllib
+    email_obfuscation_counter += 15
+    obfct = lambda: ''.join([chr((ord(c) + 32) ^ 0x3a)
+        for c in str(email_obfuscation_counter)])
+    return ('@@' + obfct() + '``'
+            + urllib.quote(''.join([chr(ord(c) ^ 0x1f) for c in s]))
+            + '``' + obfct() + '@@')
+
+def obfuscate_emails(s):
+    t = ""
+    prev_end = 0
+    for m in email_re.finditer(s):
+        t += s[prev_end:m.start()]
+        t += obfuscate_email(m.group())
+        prev_end = m.end()
+    t += s[prev_end:]
+    return t
+
+def person(name, about_loc, host=HOST_TACHIBANA, title=None, website=None,
+        do_obfuscate_emails=True):
     # Get the person's directory URL, possibly switching to the local protocol.
     base_url = make_person_url(host, about_loc, local_access=True)
     # Probe for the about me file.
@@ -123,8 +152,11 @@ def person(name, about_loc, host=HOST_TACHIBANA, title=None, website=None):
         photo_url = None
     # Render the person template.
     from template import render_template_env
-    return render_template_env(PERSON_TEMPLATE_FILE, name=name, title=title,
-            aboutme=aboutme, photo_url=photo_url, website=website)
+    rendered = render_template_env(PERSON_TEMPLATE_FILE, name=name,
+            title=title, aboutme=aboutme, photo_url=photo_url, website=website)
+    if do_obfuscate_emails:
+        return obfuscate_emails(rendered)
+    return rendered
 
 class Person (object):
     def __init__(self, name, about_loc, host=HOST_TACHIBANA, title=None,

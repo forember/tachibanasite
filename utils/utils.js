@@ -8,6 +8,11 @@
 
     Javascript utilities.
 
+    Edit History:
+
+    0.5.21  - Moved theme stuff to theme.
+            - Added pluggable interface for window events.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -32,63 +37,20 @@ window.mobilecheck = function() {
     return check;
 }
 
-var containerMarginTop = null;
+window.loadActions = []
+window.resizeActions = []
 
 // Called when the window is resized.
 function windowResizeAction() {
-    // Mobile
-    if (window.mobilecheck()) {
-        document.getElementById('content').style.fontSize = '300%';
-    }
-    // Push the whole about me section below the photo if there are less than
-    // 250 pixels available to the right of the photo.
-    var people = document.getElementsByClassName('person');
-    for (var i = 0; i < people.length; i++) {
-        var person = people[i];
-        var photos = person.getElementsByClassName('person-photo');
-        var names = person.getElementsByClassName('person-name');
-        for (var j = 0; j < photos.length; j++) {
-            photos[j].parentNode.style.padding = '0';
-        }
-        if (photos.length > 0 && names.length > 0) {
-            if (person.clientWidth - photos[0].offsetWidth < 250) {
-                names[0].style.clear = 'right';
-            } else {
-                names[0].style.clear = 'none';
-            }
-        }
-    }
-    // Set the height of the content iframe.
-    var contentIFrame = document.getElementById('content-iframe');
-    if (contentIFrame != null) {
-        contentIFrame.height = 1;
-        contentIFrame.height =
-            contentIFrame.contentWindow.document.body.scrollHeight;
-    }
-    // Fill out the sidebar.
-    document.getElementById('navfill').style.height = '0';
-    var middleHeight = document.getElementById('middleContainer').offsetHeight;
-    var navHeight = document.getElementById('navcontent').offsetHeight;
-    var newHeight = ((middleHeight - navHeight) + 1) + 'px';
-    document.getElementById('navfill').style.height = newHeight;
-    // Push page up if not enough room.
-    var container = document.getElementById('container');
-    if (containerMarginTop == null) {
-        containerMarginTop = container.style.marginTop;
-    } else {
-        container.style.marginTop = containerMarginTop;
-    }
-    var cFullHeight = container.offsetHeight + container.offsetTop;
-    if (window.innerHeight < cFullHeight) {
-        var chdiff = window.innerHeight - container.offsetHeight;
-        if (chdiff < 0) {
-            chdiff = 0;
-        }
-        container.style.marginTop = chdiff + 'px';
-    }
+    window.resizeActions.forEach(function(action, i, a) {
+        action();
+    });
 }
 
 function windowLoadAction() {
+    window.loadActions.forEach(function(action, i, a) {
+        action();
+    });
     windowResizeAction();
     hljs.initHighlighting();
     windowResizeAction();
