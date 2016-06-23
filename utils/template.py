@@ -39,6 +39,7 @@ def render_template(filename, **environment):
     return render_template_env(filename, **env)
 
 import people
+import photos
 
 # The default environment for render_template.
 DEFAULT_TEMPLATE_ENV = {
@@ -50,6 +51,8 @@ DEFAULT_TEMPLATE_ENV = {
         'Person': people.Person,
         'TACHIBANA': people.HOST_TACHIBANA,
         'CSE':  people.HOST_CSE,
+        'thumbnail_filename': photos.thumbnail_filename,
+        'twocolumn_thumbnail': photos.twocolumn_thumbnail,
         }
 
 # Render each template file provided to the script.

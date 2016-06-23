@@ -7,6 +7,11 @@ Server software for <http://tachibanatech.com/chris/home/>.
 
 # Version History
 
+## 0.6.22 (& 0.6.20)
+
+-   Added photo column and thumbnail support.
+-   Added favicon support (favicon.png in common).
+
 ## 0.5.22 A
 
 -   Added mail support.

@@ -2,7 +2,7 @@
 /*
     File:   common/themes/default/StandardPage.php
     Author: Chris McKinney
-    Edited: May 21 2016
+    Edited: Jun 22 2016
     Editor: Chris McKinney
 
     Description:
@@ -17,6 +17,8 @@
     0.5.21  - Moved theme presets into theme (support.css.php).
             - Added theme URL to config file.
             - Moved standard page into theme and separated head and body.
+
+    0.6.22  - Added favicon.
 
     License:
 
@@ -60,6 +62,8 @@ $theme = load_theme_config();
                 href="<?=get_theme_url('markdown-content.css')?>" />
         <link rel="stylesheet" type="text/css"
                 href="<?=theme_support_url($theme)?>" />
+        <link rel="icon" type="image/png"
+                href="<?=urlCommon('favicon.png')?>" />
         <?php echo_script_tags() ?>
         <script type="text/javascript">
             window.onresize = windowResizeAction;

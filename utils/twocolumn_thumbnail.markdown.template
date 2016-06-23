@@ -1,8 +1,8 @@
-%# vim: set filetype=markdown :
+%# vim: set filetype=html :
 %'''
-%   File:   utils/person.markdown.template
+%   File:   utils/twocolumn_thumbnail.markdown.template
 %   Author: Chris McKinney
-%   Edited: Mar 01 2016
+%   Edited: Jun 21 2016
 %   Editor: Chris McKinney
 %
 %   Description:
@@ -26,32 +26,8 @@
 %   limitations under the License.
 %'''
 
-<div class="person" markdown="1">
-
-%if photo_url:
-![Photo of {{name}}][{{name}} Photo]
-
-[{{name}} Photo]: {{!photo_url}} "{{name}}" {.shadow .sidephoto .person-photo}
-%end
-
-%if website:
-[{{name}} Name]: {{website}} "{{name}}'s website" {target=_blank}
-
-%if title:
-[{{name}}][{{name}} Name] &mdash; {{title}}  {.person-name}
-%else:
-[{{name}}][{{name}} Name] {.person-name}
-%end
-%elif title:
-{{name}} &mdash; {{title}}  {.person-name}
-%else:
-{{name}} {.person-name}
-%end
---------------------------
-
-%if aboutme:
-{{!aboutme}}
-%end
-
+<div class="columnphoto" style="width:{{99/columns}}%; max-height:{{maxdim}}px">
+    <a href="{{!photo}}">
+        <img class="columnphoto" src="{{!thumbnail}}" />
+    </a>
 </div>
-
