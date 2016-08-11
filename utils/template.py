@@ -2,12 +2,16 @@
 '''
     File:   utils/template.py
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: Aug 10 2016
     Editor: Chris McKinney
 
     Description:
 
     Utilities for working with template files.
+
+    Edit History:
+
+    0.8.10  - Added module support.
 
     License:
 
@@ -38,22 +42,42 @@ def render_template(filename, **environment):
     env.update(environment)
     return render_template_env(filename, **env)
 
-import people
-import photos
+def _get_tpl_lib_bindings():
+    import os, sys, importlib
+    from os.path import dirname, realpath
+    installPath = dirname(dirname(realpath(__file__)))
+    modulesPath = os.path.join(installPath, 'modules')
+    sys.path.append(modulesPath)
+    moduleNames = os.listdir(modulesPath)
+    moduleNames.sort()
+    bindings = []
+    for name in moduleNames:
+        if '.' in name:
+            continue
+        moduleInit = os.path.join(os.path.join(modulesPath, name),
+                '__init__.py')
+        if not os.path.isfile(moduleInit):
+            continue
+        try:
+            module = importlib.import_module(name)
+            bindings.append(module.TACHIBANASITE_TPL_LIB_BINDINGS)
+        except ImportError:
+            continue
+        except AttributeError:
+            continue
+    return bindings
+
+TEMPLATE_LIB_BINDINGS = _get_tpl_lib_bindings()
 
 # The default environment for render_template.
 DEFAULT_TEMPLATE_ENV = {
         '_GET': {},
         'render_template_env': render_template_env,
         'render_template': render_template,
-        'people': people,
-        'person': people.person,
-        'Person': people.Person,
-        'TACHIBANA': people.HOST_TACHIBANA,
-        'CSE':  people.HOST_CSE,
-        'thumbnail_filename': photos.thumbnail_filename,
-        'twocolumn_thumbnail': photos.twocolumn_thumbnail,
         }
+
+for bindings in TEMPLATE_LIB_BINDINGS:
+    DEFAULT_TEMPLATE_ENV.update(bindings)
 
 # Render each template file provided to the script.
 def main():

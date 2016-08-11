@@ -7,6 +7,15 @@ Server software for <http://tachibanatech.com/chris/home/>.
 
 # Version History
 
+## 0.8.10
+
+-   Added a module system. Created modules:
+    -   mobiletext: enlarges content text on mobile.
+    -   people: handles displaying "about me"-style information.
+    -   photos: nice column layout for photos.
+    -   highlight.js: loads highlight.js files.
+    -   highlight.js-exec: highlights code using highlight.js.
+
 ## 0.6.22 (& 0.6.20)
 
 -   Added photo column and thumbnail support.

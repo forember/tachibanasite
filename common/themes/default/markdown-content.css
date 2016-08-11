@@ -14,6 +14,8 @@
 
     0.6.22  - Added photo column support.
 
+    0.8.10  - Moved some styles into modules.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -31,16 +33,26 @@
     limitations under the License.
  */
 
+/* Line height handling. */
 .markdown-content {
     line-height: 1.4em;
 }
-
 h4, h5, h6 {
     line-height: 1.2em;
 }
-
 h1, h2, h3 {
     line-height: 1em;
+}
+
+/* Link behavior. */
+a, a:link {
+    color: #66c;
+    background-color: none;
+    text-decoration: underline;
+}
+a:hover {
+    color: #ffd;
+    background-color: #668;
 }
 
 /* Normal markdown text. */
@@ -64,10 +76,6 @@ h1, h2, h3 {
     line-height: 16.8pt;
 }
 
-.markdown-content pre:not(.cpp) {
-    overflow: scroll;
-}
-
 /* Put block quotes in boxes. */
 .markdown-content blockquote {
     background-color: #efe;
@@ -84,7 +92,6 @@ h1, h2, h3 {
     background-color: #112;
     color: #ffd;
 }
-
 .markdown-content input:invalid, .markdown-content textarea:invalid {
     background-color: #211;
 }
@@ -94,18 +101,6 @@ img.shadow, pre.shadow, .image-shadows img {
     box-shadow: 5px 5px 5px 0px #546;
     margin-right: 10px;
 }
-
-a, a:link {
-    color: #66c;
-    background-color: none;
-    text-decoration: underline;
-}
-
-a:hover {
-    color: #ffd;
-    background-color: #668;
-}
-
 /* Text shadows. */
 a.shadow, h1.shadow, h2.shadow, h3.shadow, h4.shadow, h5.shadow, h6.shadow {
     text-shadow: 2px 2px 2px #546;
@@ -117,38 +112,21 @@ img.center, pre.center {
     margin-left: auto;
     margin-right: auto;
 }
-
-/* Header center. */
+/* Text center. */
 h1.center, h2.center, h3.center, h4.center, h5.center, h6.center, div.center {
     text-align: center;
 }
 
-/* Clear after a person. */
-.person.clear::after {
-    content: "";
-    display: block; 
-    clear: both;
-}
-
+/* Crude image display. */
 .sidephoto {
     float: right;
     margin: auto auto 2ex 2ex;
 }
-
-img.fullwidth {
+.fullwidth {
     width: 100%;
 }
 
-div.columnphoto {
-    display: inline-block;
-    text-align: center;
-}
-
-img.columnphoto {
-    max-width: 100%;
-    max-height: 100%;
-}
-
+/* Handle content iframes. */
 #content-iframe {
     width: 100%;
 }

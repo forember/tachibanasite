@@ -1,7 +1,7 @@
 '''
-    File:   utils/people.py
+    File:   modules/people/__init__.py
     Author: Chris McKinney
-    Edited: May 21 2016
+    Edited: Aug 10 2016
     Editor: Chris McKinney
 
     Description:
@@ -11,6 +11,8 @@
     Edit History:
 
     0.5.21  - Added email obfuscation.
+
+    0.8.10  - Added TachibanaSite template library bindings.
 
     License:
 
@@ -31,9 +33,10 @@
 
 import os
 from os.path import dirname, realpath
-installPath = dirname(dirname(realpath(__file__)))
+installPath = dirname(dirname(dirname(realpath(__file__))))
 import configIniUtils
 import re
+import sys
 
 # File extensions. Revisit these periodically to sort common extensions first.
 ABOUTME_EXTENSIONS = ['.markdown', '', '.mdown', '.md', '.text', '.txt', '.html']
@@ -59,7 +62,7 @@ LOCAL_HOST_PATH = configIniUtils.get_local_host_path()
 
 # The relative path to the person template.
 PERSON_TEMPLATE_FILE = os.path.join(installPath,
-        'utils/person.markdown.template')
+        'modules/people/person.markdown.template')
 
 # A protocol response for local files. Defaults to file not existing.
 class LocalResponse (object):
@@ -170,3 +173,11 @@ class Person (object):
     def person(self):
         return person(self.name, self.about_loc, self.host, self.title,
                 self.website)
+
+TACHIBANASITE_TPL_LIB_BINDINGS = {
+        'people': sys.modules[__name__],
+        'person': person,
+        'Person': Person,
+        'TACHIBANA': HOST_TACHIBANA,
+        'CSE': HOST_CSE
+        }

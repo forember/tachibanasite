@@ -52,6 +52,4 @@ function windowLoadAction() {
         action();
     });
     windowResizeAction();
-    hljs.initHighlighting();
-    windowResizeAction();
 }

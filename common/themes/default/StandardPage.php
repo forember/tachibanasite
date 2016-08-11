@@ -2,7 +2,7 @@
 /*
     File:   common/themes/default/StandardPage.php
     Author: Chris McKinney
-    Edited: Jun 22 2016
+    Edited: Aug 10 2016
     Editor: Chris McKinney
 
     Description:
@@ -19,6 +19,8 @@
             - Moved standard page into theme and separated head and body.
 
     0.6.22  - Added favicon.
+
+    0.8.10  - Moved some features into modules.
 
     License:
 
@@ -57,9 +59,7 @@ $theme = load_theme_config();
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?=loadTitle('navlist.markdown',
                 get_config_option('site_title'))?></title>
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <link rel="stylesheet" type="text/css"
-                href="<?=get_theme_url('markdown-content.css')?>" />
+        <?php echo_link_tags() ?>
         <link rel="stylesheet" type="text/css"
                 href="<?=theme_support_url($theme)?>" />
         <link rel="icon" type="image/png"
@@ -68,11 +68,6 @@ $theme = load_theme_config();
         <script type="text/javascript">
             window.onresize = windowResizeAction;
             window.onload = windowLoadAction;
-        </script>
-        <link rel="stylesheet"
-                href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css"
-                />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js">
         </script>
     </head>
     <body>

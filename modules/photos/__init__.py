@@ -1,7 +1,7 @@
 '''
-    File:   utils/photos.py
+    File:   modules/photos/__init__.py
     Author: Chris McKinney
-    Edited: June 20 2016
+    Edited: Aug 10 2016
     Editor: Chris McKinney
 
     Description:
@@ -10,7 +10,9 @@
 
     Edit History:
 
-    0.6.20 - Created module.
+    0.6.20  - Created module.
+
+    0.8.10  - Added TachibanaSite template library bindings.
 
     License:
 
@@ -31,11 +33,11 @@
 
 import os
 from os.path import dirname, realpath
-installPath = dirname(dirname(realpath(__file__)))
+installPath = dirname(dirname(dirname(realpath(__file__))))
 
 # The relative path to the person template.
 TWOCOL_THUMB_TEMPLATE_FILE = os.path.join(installPath,
-        'utils/twocolumn_thumbnail.markdown.template')
+        'modules/photos/twocolumn_thumbnail.markdown.template')
 
 def thumbnail_filename(photo_filename, maxdim=750):
     import hashlib
@@ -64,3 +66,8 @@ def twocolumn_thumbnail(photo_filename, columns=2, maxdim=750):
     return render_template_env(TWOCOL_THUMB_TEMPLATE_FILE,
             columns=columns, maxdim=maxdim, photo=photo_filename,
             thumbnail=thumbnail_filename(photo_filename, maxdim))
+
+TACHIBANASITE_TPL_LIB_BINDINGS = {
+        'thumbnail_filename': thumbnail_filename,
+        'twocolumn_thumbnail': twocolumn_thumbnail
+        }
