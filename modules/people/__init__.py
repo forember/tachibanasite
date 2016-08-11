@@ -61,6 +61,10 @@ LOCAL_HOST = ''#HOST_TACHIBANA
 # The path on the local host that is root for DEFAULT_PROTOCOL requests.
 LOCAL_HOST_PATH = configIniUtils.get_local_host_path()
 
+DEFAULT_CSS_CLASSES = 'person'
+def _make_clear_default():
+    globals()['DEFAULT_CSS_CLASSES'] = 'person clear'
+
 # The relative path to the person template.
 PERSON_TEMPLATE_FILE = os.path.join(installPath,
         'modules/people/person.markdown.template')
@@ -139,7 +143,9 @@ def obfuscate_emails(s):
     return t
 
 def person(name, about_loc, host=LOCAL_HOST, title=None, website=None,
-        do_obfuscate_emails=True):
+        do_obfuscate_emails=True, css_classes=None):
+    if css_classes is None:
+        css_classes = DEFAULT_CSS_CLASSES
     # Get the person's directory URL, possibly switching to the local protocol.
     base_url = make_person_url(host, about_loc, local_access=True)
     # Probe for the about me file.
@@ -164,23 +170,27 @@ def person(name, about_loc, host=LOCAL_HOST, title=None, website=None,
     # Render the person template.
     from template import render_template_env
     rendered = render_template_env(PERSON_TEMPLATE_FILE, name=name,
-            title=title, aboutme=aboutme, photo_url=photo_url, website=website)
+            title=title, aboutme=aboutme, photo_url=photo_url, website=website,
+            css_classes=css_classes)
     if do_obfuscate_emails:
         return obfuscate_emails(rendered)
     return rendered
 
 class Person (object):
     def __init__(self, name, about_loc, host=LOCAL_HOST, title=None,
-            website=None):
+            website=None, css_classes=None):
+        if css_classes is None:
+            css_classes = DEFAULT_CSS_CLASSES
         self.name = name
         self.about_loc = about_loc
         self.host = host
         self.title = title
         self.website = website
+        self.css_classes = css_classes
 
     def person(self):
         return person(self.name, self.about_loc, self.host, self.title,
-                self.website)
+                self.website, self.css_classes)
 
 TACHIBANASITE_TPL_LIB_BINDINGS = {
         'people': sys.modules[__name__],

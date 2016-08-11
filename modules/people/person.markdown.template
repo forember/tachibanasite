@@ -26,7 +26,7 @@
 %   limitations under the License.
 %'''
 
-<div class="person" markdown="1">
+<div class="{{css_classes}}" markdown="1">
 
 %if photo_url:
 ![Photo of {{name}}][{{name}} Photo]

@@ -33,5 +33,5 @@
 .person.clear::after {
     content: "";
     display: block; 
-    clear: both;
+    clear: right;
 }
