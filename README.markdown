@@ -8,7 +8,9 @@ Server software for <http://tachibanatech.com/chris/home/>.
 
 ## 0.8.11
 
--   Added csv2table module.
+-   Added modules from old AFRL site:
+    -   csv2table: generates tables from CSV files.
+    -   nosidebar: removes sidebar if element with id `nosidebar` is present.
 
 ## 0.8.10
 

@@ -49,7 +49,7 @@ function get_theme_path($name) {
 // Get a file path in the active theme, loading from default if not found.
 function get_theme_path_wfallback($name, $defaultThemeName = 'default') {
     $path = get_theme_path($name);
-    if (!file_exists) {
+    if (!file_exists($path)) {
         $path = pathCommon("themes/$defaultThemeName/$name");
     }
     return $path;
