@@ -13,6 +13,7 @@
     0.5.21  - Added email obfuscation.
 
     0.8.10  - Added TachibanaSite template library bindings.
+            - Screwed with localhost stuff to make it work for now.
 
     License:
 
@@ -48,7 +49,7 @@ HOST_AFRL = 'afrl.cse.sc.edu'
 HOST_CSE = 'cse.sc.edu'
 
 # Default request protocol. Should probably stay HTTP or HTTPS.
-DEFAULT_PROTOCOL = 'https'
+DEFAULT_PROTOCOL = 'http'
 # Status codes
 STATUS_OK = 200
 STATUS_NOT_FOUND = 404
@@ -56,7 +57,7 @@ STATUS_NOT_FOUND = 404
 # Local file protocol. "file" is standard.
 LOCAL_PROTOCOL = 'file'
 # The host the site is installed on.
-LOCAL_HOST = HOST_TACHIBANA
+LOCAL_HOST = ''#HOST_TACHIBANA
 # The path on the local host that is root for DEFAULT_PROTOCOL requests.
 LOCAL_HOST_PATH = configIniUtils.get_local_host_path()
 
@@ -96,16 +97,23 @@ def request_get(url):
 # Get the directory URL for a person.
 def make_person_url(host, about_loc, protocol=DEFAULT_PROTOCOL,
         local_access=False):
-    if local_access and host == LOCAL_HOST:
-        # Switch to local protocol.
-        protocol = LOCAL_PROTOCOL
-        host = LOCAL_HOST_PATH
+    protocol_sep = '://'
+    if host == LOCAL_HOST:
+        if local_access:
+            # Switch to local protocol.
+            protocol = LOCAL_PROTOCOL
+            host = LOCAL_HOST_PATH
+        else:
+            # Bodge. Ugh.
+            protocol = protocol_sep = ''
     if '/' in about_loc or '~' in about_loc:
         # about_loc is a path.
-        return '{}://{}/{}/'.format(protocol, host, about_loc.strip('/'))
+        return '{}{}{}/{}/'.format(protocol, protocol_sep, host,
+                about_loc.strip('/'))
     else:
         # about_loc is a username.
-        return '{}://{}/~{}/afrl/'.format(protocol, host, about_loc)
+        return '{}{}{}/~{}/afrl/'.format(protocol, protocol_sep, host,
+                about_loc)
 
 email_obfuscation_counter = 1024
 email_re = re.compile('(mailto:)?[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+')
@@ -130,7 +138,7 @@ def obfuscate_emails(s):
     t += s[prev_end:]
     return t
 
-def person(name, about_loc, host=HOST_TACHIBANA, title=None, website=None,
+def person(name, about_loc, host=LOCAL_HOST, title=None, website=None,
         do_obfuscate_emails=True):
     # Get the person's directory URL, possibly switching to the local protocol.
     base_url = make_person_url(host, about_loc, local_access=True)
@@ -162,7 +170,7 @@ def person(name, about_loc, host=HOST_TACHIBANA, title=None, website=None,
     return rendered
 
 class Person (object):
-    def __init__(self, name, about_loc, host=HOST_TACHIBANA, title=None,
+    def __init__(self, name, about_loc, host=LOCAL_HOST, title=None,
             website=None):
         self.name = name
         self.about_loc = about_loc
