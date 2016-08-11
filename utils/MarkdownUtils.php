@@ -2,7 +2,7 @@
 /*
     File:   utils/MarkdownUtils.php
     Author: Chris McKinney
-    Edited: May 21 2016
+    Edited: Aug 10 2016
     Editor: Chris McKinney
 
     Description:
@@ -12,6 +12,8 @@
     Edit History:
 
     0.5.21  - Added common override URL support.
+
+    0.8.10  - Enabled truly common template files.
 
     License:
 
@@ -84,18 +86,36 @@ function mdTpl($filename) {
     $installPath = realpath(__DIR__ . '/..');
     $arg1 = escapeshellarg("$installPath/utils/template.py");
     $arg2 = escapeshellarg(json_encode($_GET));
-    $arg3 = escapeshellarg("$filename.template");
-    echo "<!-- python $arg1 $arg2 $arg3 -->";
+    $arg3 = escapeshellarg($filename);
+    //echo "<!-- python $arg1 $arg2 $arg3 -->";
     return mdText(shell_exec("python $arg1 $arg2 $arg3 2>&1"));
+}
+
+// Get a common override file path, with checks for template files
+function pathTplCommon($filename) {
+    $sitePath = realpath(__DIR__ . '/../..');
+    $installPath = realpath(__DIR__ . '/..');
+    if (file_exists($filename)) {
+        return array($filename, false);
+    } else if (file_exists("$filename.template")) {
+        return array("$filename.template", true);
+    } else if (file_exists("$sitePath/common/$filename")) {
+        return array("$sitePath/common/$filename", false);
+    } else if (file_exists("$sitePath/common/$filename.template")) {
+        return array("$sitePath/common/$filename.template", true);
+    } else {
+        return array("$installPath/common/$filename", false);
+    }
 }
 
 // Process a common override file as a Markdown SimpleTemplate, with
 // fallback.
 function mdTplCommon($filename) {
-    if (file_exists("$filename.template")) {
-        return mdTpl($filename);
+    $ptc = pathTplCommon("$filename");
+    if ($ptc[1]) {
+        return mdTpl($ptc[0]);
     } else {
-        return mdCommon($filename);
+        return mdCommon($ptc[0]);
     }
 }
 ?>
