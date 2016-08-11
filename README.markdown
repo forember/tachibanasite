@@ -2,10 +2,13 @@ Server software for <http://tachibanatech.com/chris/home/>.
 
 # Planned
 
--   Module system (people, mobile, etc.)
 -   Real mobile support (Bootstrap?)
 
 # Version History
+
+## 0.8.11
+
+-   Added csv2table module.
 
 ## 0.8.10
 
