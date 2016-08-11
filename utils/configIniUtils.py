@@ -1,12 +1,16 @@
 '''
     File:   utils/configIniUtils.py
     Author: Chris McKinney
-    Edited: Mar 01 2016
+    Edited: Aug 10 2016
     Editor: Chris McKinney
 
     Description:
 
     Utilities for working with the config.ini files.
+
+    Edit History:
+
+    0.8.10  - Added function for install URL.
 
     License:
 
@@ -44,3 +48,11 @@ def get_local_host_path():
     if lhp.startswith('"') and lhp.endswith('"'):
         lhp = lhp[1:-1]
     return lhp
+
+def get_install_url():
+    config = get_config()
+    url = config.get('TachibanaSite', 'install_url')
+    if url.startswith('"') and url.endswith('"'):
+        url = url[1:-1]
+    return url
+
