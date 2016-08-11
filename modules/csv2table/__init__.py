@@ -69,7 +69,10 @@ def csv2table(csv_path, default='', sort_func=None, sort_reverse=False,
                     pass
                 except ValueError:
                     pass
-    from urllib.parse import quote_plus
+    try:
+        from urllib.parse import quote_plus
+    except ImportError:
+        from urllib import quote_plus
     header_markdown_list = ['[{}](?sortby={}&reverse={})'.format(
         '*{}*'.format(header) if header == active else header,
         quote_plus(header), int(header == active and not sort_reverse))
