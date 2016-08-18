@@ -1,17 +1,19 @@
 <?php
 /*
-    File:   utils/LoadsJavascript.php
+    File:   utils/SendMail.php
     Author: Chris McKinney
     Edited: May 21 2016
     Editor: Chris McKinney
 
     Description:
 
-    Utilities to load javascript for the whole site.
+    Sends email from a contact form.
 
     Edit History:
 
     0.5.22  - Created to handle contact forms.
+
+    0.8.18  - Made site title generic.
 
     License:
 
@@ -35,8 +37,9 @@ include 'ConfigIniUtils.php';
 $to = get_config_option('email');
 $from = get_config_option('sender_email');
 $installURL = get_config_option('install_url');
+$siteTitle = get_config_option('site_title');
 
-$subject = 'TachibanaTech: ' . $_POST['subject'];
+$subject = "$siteTitle: " . $_POST['subject'];
 $subject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
 
 $message = 'You received a message from ' . $_POST['name'];
@@ -44,7 +47,7 @@ $replyTo = $_POST['email'];
 if ($replyTo) {
     $message .= ' <' . $replyTo . '>';
 }
-$message .= " on TachibanaTech:\n\n" . $_POST['message'];
+$message .= " on $siteTitle:\n\n" . $_POST['message'];
 $message = preg_replace('/([^\r])\n/', "\${1}\r\n", $message);
 
 $headers = "MIME-Version: 1.0\r\n";

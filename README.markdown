@@ -6,6 +6,10 @@ Server software for <http://tachibanatech.com/chris/home/>.
 
 # Version History
 
+## 0.8.18
+
+-   Made SendMail.php use config site title.
+
 ## 0.8.11
 
 -   Added modules from old AFRL site:
