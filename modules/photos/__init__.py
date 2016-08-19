@@ -14,6 +14,8 @@
 
     0.8.10  - Added TachibanaSite template library bindings.
 
+    0.8.18  - Added more generic photo-and-link function.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -33,11 +35,11 @@
 
 import os
 from os.path import dirname, realpath
-installPath = dirname(dirname(dirname(realpath(__file__))))
+modulePath = dirname(realpath(__file__))
 
 # The relative path to the person template.
-TWOCOL_THUMB_TEMPLATE_FILE = os.path.join(installPath,
-        'modules/photos/twocolumn_thumbnail.markdown.template')
+TWOCOL_THUMB_TEMPLATE_FILE = os.path.join(modulePath,
+        'twocolumn_thumbnail.markdown.template')
 
 def thumbnail_filename(photo_filename, maxdim=750):
     import hashlib
@@ -67,7 +69,14 @@ def twocolumn_thumbnail(photo_filename, columns=2, maxdim=750):
             columns=columns, maxdim=maxdim, photo=photo_filename,
             thumbnail=thumbnail_filename(photo_filename, maxdim))
 
+def twocolumn_link(photo_filename, link, columns=2, maxdim=750):
+    # Render the thumbnail template, using it differently.
+    return render_template_env(TWOCOL_THUMB_TEMPLATE_FILE,
+            columns=columns, maxdim=maxdim, photo=link,
+            thumbnail=photo_filename)
+
 TACHIBANASITE_TPL_LIB_BINDINGS = {
         'thumbnail_filename': thumbnail_filename,
-        'twocolumn_thumbnail': twocolumn_thumbnail
+        'twocolumn_thumbnail': twocolumn_thumbnail,
+        'twocolumn_link': twocolumn_link
         }
