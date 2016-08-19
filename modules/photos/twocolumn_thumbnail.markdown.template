@@ -27,7 +27,7 @@
 %'''
 
 <div class="columnphoto" style="width:{{99/columns}}%; max-height:{{maxdim}}px">
-    <a href="{{!photo}}">
+    <a href="{{!link}}">
         <img class="columnphoto" src="{{!thumbnail}}" />
     </a>
 </div>

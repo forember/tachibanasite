@@ -62,21 +62,16 @@ def thumbnail_filename(photo_filename, maxdim=750):
             df.writelines([digest])
     return thumbfile
 
-def twocolumn_thumbnail(photo_filename, columns=2, maxdim=750):
+def twocolumn_thumbnail(photo_filename, columns=2, maxdim=750, link=None):
+    if link is None:
+        link = photo_filename
     # Render the thumbnail template.
     from template import render_template_env
     return render_template_env(TWOCOL_THUMB_TEMPLATE_FILE,
-            columns=columns, maxdim=maxdim, photo=photo_filename,
+            columns=columns, maxdim=maxdim, link=link,
             thumbnail=thumbnail_filename(photo_filename, maxdim))
-
-def twocolumn_link(photo_filename, link, columns=2, maxdim=750):
-    # Render the thumbnail template, using it differently.
-    return render_template_env(TWOCOL_THUMB_TEMPLATE_FILE,
-            columns=columns, maxdim=maxdim, photo=link,
-            thumbnail=photo_filename)
 
 TACHIBANASITE_TPL_LIB_BINDINGS = {
         'thumbnail_filename': thumbnail_filename,
         'twocolumn_thumbnail': twocolumn_thumbnail,
-        'twocolumn_link': twocolumn_link
         }
