@@ -12,6 +12,8 @@
 
     0.8.10  - Created to support the photos module.
 
+    0.8.22  - Added support for captions and hover blur.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -37,4 +39,41 @@ div.columnphoto {
 img.columnphoto {
     max-width: 100%;
     max-height: 100%;
+}
+
+/* Captions. */
+div.columnphoto-caption {
+    position: absolute;
+    left: inherit;
+    top: inherit;
+    width: inherit;
+    height: inherit;
+    text-align: center;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    display: none;
+}
+div.columnphoto-caption div {
+    position: relative;
+    top: -1.5em;
+}
+div.columnphoto:hover div.columnphoto-caption {
+    display: block;
+    z-index: 999;
+}
+
+/* Hover filters */
+img.columnphoto {
+    filter: none;
+    -moz-filter: none;
+    -webkit-filter: none;
+    -o-filter: none;
+    -ms-filter: none;
+}
+img.columnphoto.columnphoto-hover-blur:hover {
+    filter: blur(4px);
+    -moz-filter: blur(4px);
+    -webkit-filter: blur(4px);
+    -o-filter: blur(4px);
+    -ms-filter: blur(4px);
 }

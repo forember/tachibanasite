@@ -9,6 +9,10 @@
 %
 %   Template for thumbnail columns.
 %
+%   Edit History:
+%
+%   0.8.22  - Added caption and hover filter support.
+%
 %   License:
 %
 %   Copyright 2016 Chris McKinney
@@ -26,8 +30,19 @@
 %   limitations under the License.
 %'''
 
-<div class="columnphoto" style="width:{{99/columns}}%; max-height:{{maxdim}}px">
+<%
+img_classes = 'columnphoto'
+if hover_filter:
+    img_classes += ' columnphoto-hover-' + hover_filter
+end
+%>
+
+<div class="columnphoto"; style="width:{{99/columns}}%;
+        max-height:{{maxdim}}px">
     <a href="{{!link}}">
-        <img class="columnphoto" src="{{!thumbnail}}" />
+        <img class="{{img_classes}}" src="{{!thumbnail}}" />
     </a>
+% if caption:
+    <div class="columnphoto-caption"><div>{{caption}}</div></div>
+% end
 </div>

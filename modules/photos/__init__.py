@@ -1,7 +1,7 @@
 '''
     File:   modules/photos/__init__.py
     Author: Chris McKinney
-    Edited: Aug 10 2016
+    Edited: Aug 22 2016
     Editor: Chris McKinney
 
     Description:
@@ -15,6 +15,8 @@
     0.8.10  - Added TachibanaSite template library bindings.
 
     0.8.18  - Added more generic photo-and-link function.
+
+    0.8.22  - Added caption and hover filter support.
 
     License:
 
@@ -62,14 +64,16 @@ def thumbnail_filename(photo_filename, maxdim=750):
             df.writelines([digest])
     return thumbfile
 
-def twocolumn_thumbnail(photo_filename, columns=2, maxdim=750, link=None):
+def twocolumn_thumbnail(photo_filename, columns=2, maxdim=750, link=None,
+        caption=None, hover_filter=None):
     if link is None:
         link = photo_filename
     # Render the thumbnail template.
     from template import render_template_env
     return render_template_env(TWOCOL_THUMB_TEMPLATE_FILE,
             columns=columns, maxdim=maxdim, link=link,
-            thumbnail=thumbnail_filename(photo_filename, maxdim))
+            thumbnail=thumbnail_filename(photo_filename, maxdim),
+            caption=caption, hover_filter=hover_filter)
 
 TACHIBANASITE_TPL_LIB_BINDINGS = {
         'thumbnail_filename': thumbnail_filename,
