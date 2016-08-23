@@ -1,4 +1,4 @@
-Server software for <http://tachibanatech.com/chris/home/>.
+Server software for <http://tachibanatech.com/> and <http://afrl.cse.sc.edu/>.
 
 # Planned
 
