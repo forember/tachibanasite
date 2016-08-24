@@ -3,6 +3,6 @@ Sidebar {.sideHeader .center}
 -------
 </div>
 
-* [TachibanaTech][TT]
+* [TS Docs][TS]
 
-[TT]:   https://tachibanatech.com/ "TachibanaTech Site"
+[TS]:   https://tachibanatech.com/ts/ "TachibanaSite Documentation"

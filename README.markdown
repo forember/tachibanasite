@@ -1,4 +1,6 @@
-Server software for <http://tachibanatech.com/> and <http://afrl.cse.sc.edu/>.
+Server software for <https://tachibanatech.com/> and <http://afrl.cse.sc.edu/>.
+
+Documentation at <https://tachibanatech.com/ts/>.
 
 # Planned
 

@@ -39,17 +39,19 @@
     limitations under the License.
  */
 
+// Get path to tachibanasite directory.
 $installPath = realpath(__DIR__ . '/../../..');
 // Change to the directory of the current page.
 chdir(dirname($_SERVER['SCRIPT_FILENAME']));
 // Import utilities.
 include_once "$installPath/utils/ForceSSL.php";
-maybeSSL();
+maybeSSL(); // Force SSL if option set.
 include_once "$installPath/utils/MarkdownUtils.php";
 include_once "$installPath/utils/NavFilter.php";
 include_once "$installPath/utils/ConfigIniUtils.php";
 include_once "$installPath/utils/Theme.php";
 include_once "$installPath/utils/LoadJavascript.php";
+// Load useful values.
 $installURL = get_config_option('install_url');
 $theme = load_theme_config();
 ?>
@@ -58,20 +60,22 @@ $theme = load_theme_config();
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?=loadTitle('navlist.markdown',
-                get_config_option('site_title'))?></title>
-        <?php echo_link_tags() ?>
+                get_config_option('site_title'))/*Generate title*/?></title>
+        <?php echo_link_tags()/*Load CSS*/?>
         <link rel="stylesheet" type="text/css"
-                href="<?=theme_support_url($theme)?>" />
+                href="<?=theme_support_url($theme)/*Load support.css.php*/?>"/>
         <link rel="icon" type="image/png"
-                href="<?=urlCommon('favicon.png')?>" />
-        <?php echo_script_tags() ?>
+                href="<?=urlCommon('favicon.png')/*Load favicon*/?>" />
+        <?php echo_script_tags()/*Load Javascript*/?>
         <script type="text/javascript">
+            // Set window actions to allow for registration.
             window.onresize = windowResizeAction;
             window.onload = windowLoadAction;
         </script>
     </head>
     <body>
         <?php
+            // Load the body of the standard page.
             $bodyPage = get_theme_path_wfallback('StandardPageBody.php');
             include "$bodyPage";
         ?>

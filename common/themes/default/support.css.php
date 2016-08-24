@@ -34,6 +34,7 @@ header('Content-Type: text/css');
     limitations under the License.
  */
 /*<?php
+// Color presets.
 $presets = array(
     'default' => array(
         'bbc' => '#808080',
@@ -79,16 +80,21 @@ $presets = array(
     )
 );
 
+// Determine the preset to use.
 if (array_key_exists('preset', $_GET)
         && array_key_exists($_GET['preset'], $presets)) {
+    // A preset was specified in the URL.
     $presetName = $_GET['preset'];
+    // Gets echoed into CSS comment.
     echo "Loaded $presetName preset.\n";
 } else {
+    // No preset was specified in the URL.
     $presetName = 'default';
     echo "Falling back to $presetName preset.\n";
 }
 
 function define_var(&$var, $name) {
+    // Overwrite var if custom provided in URL.
     global $presets, $presetName;
     if (array_key_exists($name, $_GET)) {
         $var = $_GET[$name];
@@ -99,6 +105,7 @@ function define_var(&$var, $name) {
     }
 }
 
+// Load variables.
 define_var($bodyBColor, 'bbc');
 define_var($containerBColor, 'cbc');
 define_var($headerBColor, 'hbc');

@@ -30,7 +30,9 @@
     limitations under the License.
  */
 
+// Get path to tachibanasite directory.
 $installPath = realpath(__DIR__ . '/../../..');
+// Import utilities.
 include_once "$installPath/utils/MarkdownUtils.php";
 include_once "$installPath/utils/NavFilter.php";
 include_once "$installPath/utils/ConfigIniUtils.php";
@@ -40,8 +42,8 @@ include_once "$installPath/utils/ConfigIniUtils.php";
     <div id="pageHeader"><!-- Start page header -->
         <?=mdTplCommon('header.markdown')?>
     </div><!-- End page header -->
-    <div id="middleContainer">
-        <div id="navcontainer"><!-- Start Navigation -->
+    <div id="middleContainer"><!-- Start middle -->
+        <div id="navcontainer"><!-- Start navigation -->
             <div id="navcontent">
                 <?=loadNav('navlist.markdown')?>
                 <div id="sidebarContainer"><!--Start Sidebar wrapper-->
@@ -53,20 +55,18 @@ include_once "$installPath/utils/ConfigIniUtils.php";
             <div id="navfill"></div>
         </div><!-- End navigation -->
         <div id="contentContainer"><!-- Start main content wrapper -->
-            <div id="content" class="markdown-content">
-                                                <!-- Start content -->
+            <div id="content" class="markdown-content"><!-- Start content -->
                 <?=mdTplCommon('index.markdown')?>
             </div><!-- End content -->
         </div><!-- End main content wrapper -->
-    </div>
+    </div> <!-- End middle -->
     <div class="clearer"></div>
     <div id="footer"><!-- Start Footer -->
         <div style="float:right;">
             <p>TachibanaSite v<?=get_config_option('version')?></p>
         </div>
         <?=mdTplCommon('copyright.markdown')?>
-        <div id="breadcrumbcontainer">
-                                <!-- Start the breadcrumb wrapper -->
+        <div id="breadcrumbcontainer"><!-- Start the breadcrumb wrapper -->
             <?=mdTplCommon('breadcrumb.markdown')?>
         </div><!-- End breadcrumb -->
     </div><!-- End Footer -->
