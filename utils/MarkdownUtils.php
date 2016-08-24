@@ -122,7 +122,7 @@ function mdTpl($filename) {
 // Get a common override file path, with checks for template files
 function pathTplCommon($filename) {
     if (!get_config_option('enable_templates')) {
-        return pathCommon($filename);
+        return array(pathCommon($filename), false);
     }
     $sitePath = realpath(__DIR__ . '/../..');
     $installPath = realpath(__DIR__ . '/..');
