@@ -129,7 +129,7 @@ body {
     overflow: hidden;
 }
 
-#pageHeader, div.sideHeader, #footer {
+#pageHeader, div.sideHeader:first-of-type, #footer {
     background-color: <?=$headerBColor?>;
     background-image: url(images/header_top_grad.png);
     background-size: auto 40pt;
@@ -168,8 +168,10 @@ body {
     padding: 4pt;
     margin: 0;
     text-decoration: underline;
+    color: <?=$headerFColor?>;
 }
 div.sideHeader {
+    background-color: <?=$navfillBColor?>;
     transform: scaleY(-1);
 }
 div.sideHeader * {
