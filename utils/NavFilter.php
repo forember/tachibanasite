@@ -53,7 +53,7 @@ function loadNav($navlistName) {
 function loadTitle($navlistName, $siteTitle) {
     $mdHtml = mdTplCommon($navlistName);
     preg_match(navlistAnchorPattern(), $mdHtml, $matches);
-    if ($matches[3]) {
+    if (array_key_exists(3, $matches) && $matches[3]) {
         $title = $matches[3];
     } else if (file_exists('title.text')) {
         $title = file_get_contents('title.text');

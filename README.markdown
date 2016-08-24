@@ -6,6 +6,10 @@ Server software for <http://tachibanatech.com/chris/home/>.
 
 # Version History
 
+## 0.8.24
+
+-   Added template switch and common override recursion.
+
 ## 0.8.22
 
 -   Made some enhancements to the photos module.
