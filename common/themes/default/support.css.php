@@ -217,7 +217,7 @@ div.sideHeader * {
     background-color: <?=$headerBColor?>;
     font-weight: bold;
 }
-#navcontainer li a:hover {
+#navcontainer li a:hover:not(#current) {
     background-color: <?=$headerBColor?>;
 }
 #sidebarContainer li a:hover {
