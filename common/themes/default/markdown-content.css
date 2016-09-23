@@ -16,6 +16,8 @@
 
     0.8.10  - Moved some styles into modules.
 
+    0.9.23  - Added table borders.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -94,6 +96,15 @@ a:hover {
 }
 .markdown-content input:invalid, .markdown-content textarea:invalid {
     background-color: #211;
+}
+
+/* Tables. */
+.markdown-content table {
+    border-collapse: collapse;
+}
+.markdown-content table th, .markdown-content table td {
+    border: 1px solid black;
+    padding: 2px;
 }
 
 /* Box shadows. */

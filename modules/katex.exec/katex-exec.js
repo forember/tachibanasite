@@ -1,16 +1,16 @@
 /*
-    File:   modules/highlight.js.exec/hljs-exec.js
+    File:   modules/katex.exec/katex-exec.js
     Author: Chris McKinney
-    Edited: Aug 10 2016
+    Edited: Sep 23 2016
     Editor: Chris McKinney
 
     Description:
 
-    Starts highlighting on load.
+    Automatically converts elements with class "katex" from LaTeX to HTML.
 
     Edit History:
 
-    0.8.10  - Created. Moved content from utils.js.
+    0.9.23  - Created to support KaTeX.
 
     License:
 
@@ -30,5 +30,14 @@
  */
 
 window.loadActions.push(function() {
-    hljs.initHighlighting();
+    $(".katex-math").each(function() {
+        var latex = $(this).text();
+        var html = katex.renderToString(latex);
+        $(this).html(html);
+    });
+    $(".katex-display").each(function() {
+        var latex = $(this).text();
+        var html = katex.renderToString(latex, {displayMode: true});
+        $(this).html(html);
+    });
 })

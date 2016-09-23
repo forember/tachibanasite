@@ -8,6 +8,10 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 0.9.23
+
+-   Added KaTeX support.
+
 ## 0.8.24
 
 -   Added template switch and common override recursion.
