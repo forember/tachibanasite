@@ -82,6 +82,11 @@ $presets = array(
     )
 );
 
+foreach ($presets as $name => $_) {
+    $presets[$name]['cw'] = '1200px';
+    $presets[$name]['cmw'] = '400px';
+}
+
 // Determine the preset to use.
 if (array_key_exists('preset', $_GET)
         && array_key_exists($_GET['preset'], $presets)) {
@@ -113,6 +118,8 @@ define_var($containerBColor, 'cbc');
 define_var($headerBColor, 'hbc');
 define_var($headerFColor, 'hfc');
 define_var($navfillBColor, 'nbc');
+define_var($containerWidth, 'cw');
+define_var($containerMinWidth, 'cmw');
 ?>*/
 
 body {
@@ -134,8 +141,8 @@ body {
     */
     text-align: left;
     display: inline-block;
-    width: 1600px;
-    min-width: 400px;
+    width: <?=$containerWidth?>;
+    min-width: <?=$containerMinWidth?>;
     max-width: 95%;
 
     background-color: <?=$containerBColor?>;
