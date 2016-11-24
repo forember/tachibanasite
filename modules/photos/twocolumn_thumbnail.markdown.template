@@ -13,6 +13,8 @@
 %
 %   0.8.22  - Added caption and hover filter support.
 %
+%   0.11.24 - Made captions more reasonable.
+%
 %   License:
 %
 %   Copyright 2016 Chris McKinney
@@ -43,6 +45,6 @@ end
         <img class="{{img_classes}}" src="{{!thumbnail}}" />
     </a>
 % if caption:
-    <div class="columnphoto-caption"><div>{{caption}}</div></div>
+    <div class="columnphoto-caption"><div><span>{{caption}}</span></div></div>
 % end
 </div>

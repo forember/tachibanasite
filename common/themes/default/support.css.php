@@ -17,6 +17,8 @@ header('Content-Type: text/css');
     0.5.21  - Moved theme presets here from the standard page.
             - Made image URLs relative.
 
+    0.11.24 - Gave the main container a max width.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -119,15 +121,25 @@ body {
     background-repeat: repeat-x;
     font-family: sans-serif;
     font-size: 12pt;
+
+    text-align: center;
 }
 
 #container {
+    /*
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
+    */
+    text-align: left;
+    display: inline-block;
+    width: 1600px;
+    min-width: 400px;
+    max-width: 95%;
+
     background-color: <?=$containerBColor?>;
-    margin: 24px 24px 0 24px;
+    /*margin: 24px 24px 0 24px;*/
 }
 
 #middleContainer {

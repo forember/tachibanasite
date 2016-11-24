@@ -14,6 +14,8 @@
 
     0.8.22  - Added support for captions and hover blur.
 
+    0.11.24 - Made captions moe reasonable.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -35,6 +37,7 @@
 div.columnphoto {
     display: inline-block;
     text-align: center;
+    position: relative;
 }
 img.columnphoto {
     max-width: 100%;
@@ -44,10 +47,15 @@ img.columnphoto {
 /* Captions. */
 div.columnphoto-caption {
     position: absolute;
+    /*
     left: inherit;
     top: inherit;
     width: inherit;
     height: inherit;
+    */
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
     text-align: center;
     color: white;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -55,7 +63,7 @@ div.columnphoto-caption {
 }
 div.columnphoto-caption div {
     position: relative;
-    top: -1.5em;
+    top: -0.25em;
 }
 div.columnphoto:hover div.columnphoto-caption {
     display: block;

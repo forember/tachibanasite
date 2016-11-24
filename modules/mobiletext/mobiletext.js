@@ -12,6 +12,8 @@
 
     0.8.10  - Created. Moved content from theme.js.
 
+    0.11.24 - Made the container go edge-to-edge.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -31,6 +33,11 @@
 
 window.resizeActions.push(function() {
     if (window.mobilecheck()) {
-        document.getElementById('content').style.fontSize = '300%';
+        document.getElementById('content').style.fontSize = '250%';
+        var container = document.getElementById('container');
+        container.style.position = 'absolute';
+        container.style.maxWidth = '100%';
+        container.style.left = '0'
+        container.style.right = '0'
     }
 })
