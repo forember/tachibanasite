@@ -15,6 +15,8 @@
 
     0.8.18  - Made site title generic.
 
+    0.11.24 - Now checks that name, subject, and message are non-empty.
+
     License:
 
     Copyright 2016 Chris McKinney

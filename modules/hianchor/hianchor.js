@@ -1,18 +1,16 @@
 /*
-    File:   modules/mobiletext/mobiletext.js
+    File:   modules/hianchir/hianchor.js
     Author: Chris McKinney
     Edited: Aug 10 2016
     Editor: Chris McKinney
 
     Description:
 
-    Crude mobile support.
+    Highlights the current anchor.
 
     Edit History:
 
-    0.8.10  - Created. Moved content from theme.js.
-
-    0.11.24 - Made the container go edge-to-edge.
+    0.12.20 - Created.
 
     License:
 
@@ -31,13 +29,19 @@
     limitations under the License.
  */
 
-window.resizeActions.push(function() {
-    if (window.mobilecheck()) {
-        document.getElementById('content').style.fontSize = '250%';
-        var container = document.getElementById('container');
-        container.style.position = 'absolute';
-        container.style.maxWidth = '100%';
-        container.style.left = '0'
-        container.style.right = '0'
+window.hianchor_bg = undefined;
+window.hianchor_hash = undefined;
+
+window.hianchor_update = function () {
+    if (window.hianchor_hash !== undefined) {
+        $(window.hianchor_hash).css("background-color", window.hianchor_bg);
     }
+    window.hianchor_hash = window.location.hash;
+    window.hianchor_bg = $(window.hianchor_hash).css("background-color");
+    $(window.hianchor_hash).css("background-color", "#ff0");
+}
+
+window.loadActions.push(function() {
+    window.hianchor_update();
+    $(window).on('hashchange', window.hianchor_update)
 })

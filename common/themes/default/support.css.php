@@ -17,6 +17,8 @@ header('Content-Type: text/css');
     0.5.21  - Moved theme presets here from the standard page.
             - Made image URLs relative.
 
+    0.11.24 - Gave the main container a max width.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -80,6 +82,11 @@ $presets = array(
     )
 );
 
+foreach ($presets as $name => $_) {
+    $presets[$name]['cw'] = '1200px';
+    $presets[$name]['cmw'] = '400px';
+}
+
 // Determine the preset to use.
 if (array_key_exists('preset', $_GET)
         && array_key_exists($_GET['preset'], $presets)) {
@@ -111,6 +118,8 @@ define_var($containerBColor, 'cbc');
 define_var($headerBColor, 'hbc');
 define_var($headerFColor, 'hfc');
 define_var($navfillBColor, 'nbc');
+define_var($containerWidth, 'cw');
+define_var($containerMinWidth, 'cmw');
 ?>*/
 
 body {
@@ -119,15 +128,25 @@ body {
     background-repeat: repeat-x;
     font-family: sans-serif;
     font-size: 12pt;
+
+    text-align: center;
 }
 
 #container {
+    /*
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
+    */
+    text-align: left;
+    display: inline-block;
+    width: <?=$containerWidth?>;
+    min-width: <?=$containerMinWidth?>;
+    max-width: 95%;
+
     background-color: <?=$containerBColor?>;
-    margin: 24px 24px 0 24px;
+    /*margin: 24px 24px 0 24px;*/
 }
 
 #middleContainer {

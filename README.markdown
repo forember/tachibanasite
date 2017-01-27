@@ -8,6 +8,19 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 0.12.20
+
+-   Made the TachibanaSite version link to the documentation.
+-   Added the hianchor module for highlighting the current anchor.
+
+## 0.11.24
+
+-   Made the default theme main container more reasonably-sized on large
+    screens and mobile.
+
+-   Made captions act more reasonably.
+-   Added check for empty mail.
+
 ## 0.9.23
 
 -   Added KaTeX support.

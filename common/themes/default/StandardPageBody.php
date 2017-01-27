@@ -63,7 +63,8 @@ include_once "$installPath/utils/ConfigIniUtils.php";
     <div class="clearer"></div>
     <div id="footer"><!-- Start Footer -->
         <div style="float:right;">
-            <p>TachibanaSite v<?=get_config_option('version')?></p>
+            <p><a href="https://tachibanatech.com/ts/">TachibanaSite</a>
+                v<?=get_config_option('version')?></p>
         </div>
         <?=mdTplCommon('copyright.markdown')?>
         <div id="breadcrumbcontainer"><!-- Start the breadcrumb wrapper -->
