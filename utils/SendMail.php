@@ -39,6 +39,16 @@ $from = get_config_option('sender_email');
 $installURL = get_config_option('install_url');
 $siteTitle = get_config_option('site_title');
 
+if (!($_POST['subject'] && $_POST['name'] && $_POST['message'])) {
+    header("Location: $installURL/pages/mail-failure/");
+    die();
+}
+
+if ($_POST['name'] == 'Barnypok') {
+    header("Location: $installURL/pages/mail-success/");
+    die();
+}
+
 $subject = "$siteTitle: " . $_POST['subject'];
 $subject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
 
