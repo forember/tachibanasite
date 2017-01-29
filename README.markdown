@@ -8,6 +8,10 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 1.1.29
+
+-   Added common file SendMailFilter.php
+
 ## 0.12.20
 
 -   Made the TachibanaSite version link to the documentation.
