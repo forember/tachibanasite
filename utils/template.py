@@ -30,33 +30,37 @@
     limitations under the License.
 '''
 
-# Render the template in the given environment.
-def render_template_env(filename, **environment):
-    from bottle import SimpleTemplate
-    with open(filename) as f:
-        return SimpleTemplate(f, name=filename).render(**environment)
+import sys
 
-# Render the template in the default environment, with additional values.
+def render_template_env(filename, **environment):
+    '''Render the template in the given environment.'''
+    from bottle import SimpleTemplate
+    with open(filename) as fileobj:
+        return SimpleTemplate(fileobj, name=filename).render(**environment)
+
 def render_template(filename, **environment):
+    '''Render the template in the default environment with additional values.'''
     env = DEFAULT_TEMPLATE_ENV.copy()
     env.update(environment)
     return render_template_env(filename, **env)
 
 def _get_tpl_lib_bindings():
-    import os, sys, importlib
+    '''Gets bindings from modules.'''
+    import importlib
+    import os
     from os.path import dirname, realpath
-    installPath = dirname(dirname(realpath(__file__)))
-    modulesPath = os.path.join(installPath, 'modules')
-    sys.path.append(modulesPath)
-    moduleNames = os.listdir(modulesPath)
-    moduleNames.sort()
+    install_path = dirname(dirname(realpath(__file__)))
+    modules_path = os.path.join(install_path, 'modules')
+    sys.path.append(modules_path)
+    module_names = os.listdir(modules_path)
+    module_names.sort()
     bindings = []
-    for name in moduleNames:
+    for name in module_names:
         if '.' in name:
             continue
-        moduleInit = os.path.join(os.path.join(modulesPath, name),
+        module_init = os.path.join(os.path.join(modules_path, name),
                 '__init__.py')
-        if not os.path.isfile(moduleInit):
+        if not os.path.isfile(module_init):
             continue
         try:
             module = importlib.import_module(name)
@@ -67,8 +71,6 @@ def _get_tpl_lib_bindings():
             continue
     return bindings
 
-TEMPLATE_LIB_BINDINGS = _get_tpl_lib_bindings()
-
 # The default environment for render_template.
 DEFAULT_TEMPLATE_ENV = {
         '_GET': {},
@@ -76,18 +78,17 @@ DEFAULT_TEMPLATE_ENV = {
         'render_template': render_template,
         }
 
-for bindings in TEMPLATE_LIB_BINDINGS:
-    DEFAULT_TEMPLATE_ENV.update(bindings)
+for lib_bindings in _get_tpl_lib_bindings():
+    DEFAULT_TEMPLATE_ENV.update(lib_bindings)
 
-# Render each template file provided to the script.
 def main():
-    import sys, json
-    _GET = json.loads(sys.argv[1])
+    '''Render each template file provided to the script.'''
+    import json
+    get_list = json.loads(sys.argv[1])
     for filename in sys.argv[2:]:
-        print(render_template(filename, _GET=_GET))
+        print render_template(filename, _GET=get_list)
 
 if __name__ == '__main__':
-    import sys
     reload(sys)
-    sys.setdefaultencoding('utf-8')
+    #sys.setdefaultencoding('utf-8')
     main()

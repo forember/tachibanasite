@@ -37,35 +37,37 @@
 
 import os
 from os.path import dirname, realpath
-modulePath = dirname(realpath(__file__))
+MODULE_PATH = dirname(realpath(__file__))
 
 # The relative path to the person template.
-TWOCOL_THUMB_TEMPLATE_FILE = os.path.join(modulePath,
+TWOCOL_THUMB_TEMPLATE_FILE = os.path.join(MODULE_PATH,
         'twocolumn_thumbnail.markdown.template')
 
 def thumbnail_filename(photo_filename, maxdim=750):
+    '''Generates and returns a thumbnail of an image with caching.'''
     import hashlib
     from os.path import isfile
     digestfile = photo_filename + '.md5'
     thumbfile = photo_filename + '.thumbnail.jpeg'
-    with open(photo_filename, 'rb') as f:
-        s = True
-        m = hashlib.md5()
-        while s:
-            s = f.read(0x1000)
-            m.update(s)
-        digest = m.hexdigest().strip()
+    with open(photo_filename, 'rb') as photo_file:
+        photo_data = True
+        md5_hash = hashlib.md5()
+        while photo_data:
+            photo_data = photo_file.read(0x1000)
+            md5_hash.update(photo_data)
+        digest = md5_hash.hexdigest().strip()
     if not (isfile(digestfile) and open(digestfile).read().strip() == digest):
         from PIL import Image
-        im = Image.open(photo_filename)
-        im.thumbnail((maxdim, maxdim), Image.ANTIALIAS)
-        im.save(thumbfile)
-        with open(digestfile, 'w') as df:
-            df.writelines([digest])
+        photo = Image.open(photo_filename)
+        photo.thumbnail((maxdim, maxdim), Image.ANTIALIAS)
+        photo.save(thumbfile)
+        with open(digestfile, 'w') as dfobj:
+            dfobj.writelines([digest])
     return thumbfile
 
 def twocolumn_thumbnail(photo_filename, columns=2, maxdim=750, link=None,
         caption=None, hover_filter=None):
+    '''Generates markdown for inserting a thumbnail into a page.'''
     if link is None:
         link = photo_filename
     # Render the thumbnail template.

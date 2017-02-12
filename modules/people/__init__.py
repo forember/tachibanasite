@@ -34,13 +34,14 @@
 
 import os
 from os.path import dirname, realpath
-installPath = dirname(dirname(dirname(realpath(__file__))))
+INSTALL_PATH = dirname(dirname(dirname(realpath(__file__))))
 import configIniUtils
 import re
 import sys
 
 # File extensions. Revisit these periodically to sort common extensions first.
-ABOUTME_EXTENSIONS = ['.markdown', '', '.mdown', '.md', '.text', '.txt', '.html']
+ABOUTME_EXTENSIONS = ['.markdown', '', '.mdown', '.md', '.text', '.txt',
+                      '.html']
 PHOTO_EXTENSIONS = ['.jpeg', '.jpg', '.png', '.gif', '.bmp', '.ico']
 
 # Available hosts.
@@ -63,19 +64,21 @@ LOCAL_HOST_PATH = configIniUtils.get_local_host_path()
 
 DEFAULT_CSS_CLASSES = 'person'
 def _make_clear_default():
+    '''Adds "clear" to the default CSS classes for person entries.'''
     globals()['DEFAULT_CSS_CLASSES'] = 'person clear'
 
 # The relative path to the person template.
-PERSON_TEMPLATE_FILE = os.path.join(installPath,
+PERSON_TEMPLATE_FILE = os.path.join(INSTALL_PATH,
         'modules/people/person.markdown.template')
 
-# A protocol response for local files. Defaults to file not existing.
-class LocalResponse (object):
+class LocalResponse(object):
+    '''A protocol response for local files. Defaults to file not existing.'''
     status = STATUS_NOT_FOUND
     read = lambda: ''
+    text = ''
 
-# Request a URL.
 def request_get(url):
+    '''Request a URL.'''
     if url.startswith(LOCAL_PROTOCOL + '://'):
         # Local file
         from os.path import isabs, isfile
@@ -98,9 +101,9 @@ def request_get(url):
     # Return the response
     return response
 
-# Get the directory URL for a person.
 def make_person_url(host, about_loc, protocol=DEFAULT_PROTOCOL,
         local_access=False):
+    '''Get the directory URL for a person.'''
     protocol_sep = '://'
     if host == LOCAL_HOST:
         if local_access:
@@ -119,31 +122,34 @@ def make_person_url(host, about_loc, protocol=DEFAULT_PROTOCOL,
         return '{}{}{}/~{}/afrl/'.format(protocol, protocol_sep, host,
                 about_loc)
 
-email_obfuscation_counter = 1024
-email_re = re.compile('(mailto:)?[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+')
+EMAIL_OBFUSCATION_COUNTER = 1024
+EMAIL_RE = re.compile(r'(mailto:)?[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+')
 
-def obfuscate_email(s):
-    global email_obfuscation_counter
+def obfuscate_email(email_string):
+    '''Obfuscate a string.'''
+    global EMAIL_OBFUSCATION_COUNTER
     import urllib
-    email_obfuscation_counter += 15
+    EMAIL_OBFUSCATION_COUNTER += 15
     obfct = lambda: ''.join([chr((ord(c) + 32) ^ 0x3a)
-        for c in str(email_obfuscation_counter)])
+        for c in str(EMAIL_OBFUSCATION_COUNTER)])
     return ('@@' + obfct() + '``'
-            + urllib.quote(''.join([chr(ord(c) ^ 0x1f) for c in s]))
+            + urllib.quote(''.join([chr(ord(c) ^ 0x1f) for c in email_string]))
             + '``' + obfct() + '@@')
 
-def obfuscate_emails(s):
-    t = ""
+def obfuscate_emails(page_seg):
+    '''Obfuscate the email addresses in a string.'''
+    output = ""
     prev_end = 0
-    for m in email_re.finditer(s):
-        t += s[prev_end:m.start()]
-        t += obfuscate_email(m.group())
-        prev_end = m.end()
-    t += s[prev_end:]
-    return t
+    for match in EMAIL_RE.finditer(page_seg):
+        output += page_seg[prev_end:match.start()]
+        output += obfuscate_email(match.group())
+        prev_end = match.end()
+    output += page_seg[prev_end:]
+    return output
 
 def person(name, about_loc, host=LOCAL_HOST, title=None, website=None,
         do_obfuscate_emails=True, css_classes=None):
+    '''Generate the markdown for a person entry on a page.'''
     if css_classes is None:
         css_classes = DEFAULT_CSS_CLASSES
     # Get the person's directory URL, possibly switching to the local protocol.
@@ -176,9 +182,12 @@ def person(name, about_loc, host=LOCAL_HOST, title=None, website=None,
         return obfuscate_emails(rendered)
     return rendered
 
-class Person (object):
+class Person(object):
+    '''Convenience class for building up values to pass to `person`.'''
+
     def __init__(self, name, about_loc, host=LOCAL_HOST, title=None,
             website=None, css_classes=None):
+        '''Arguments are the same as for `person`.'''
         if css_classes is None:
             css_classes = DEFAULT_CSS_CLASSES
         self.name = name
@@ -189,6 +198,7 @@ class Person (object):
         self.css_classes = css_classes
 
     def person(self):
+        '''Calls `person`.'''
         return person(self.name, self.about_loc, self.host, self.title,
                 self.website, self.css_classes)
 

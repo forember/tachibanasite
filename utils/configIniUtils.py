@@ -31,18 +31,20 @@
 
 import os
 from os.path import dirname, realpath
-installPath = dirname(dirname(realpath(__file__)))
-configPaths = [os.path.join(installPath, 'common/config.ini'),
-        realpath(os.path.join(installPath, '../common/config.ini')),
+INSTALL_PATH = dirname(dirname(realpath(__file__)))
+CONFIG_PATHS = [os.path.join(INSTALL_PATH, 'common/config.ini'),
+        realpath(os.path.join(INSTALL_PATH, '../common/config.ini')),
         'config.ini']
 
 def get_config():
+    '''Get configuration object.'''
     import ConfigParser
     config = ConfigParser.ConfigParser()
-    config.read(configPaths)
+    config.read(CONFIG_PATHS)
     return config
 
 def get_local_host_path():
+    '''Parse local host path.'''
     config = get_config()
     lhp = config.get('TachibanaSite', 'local_host_path')
     if lhp.startswith('"') and lhp.endswith('"'):
@@ -50,6 +52,7 @@ def get_local_host_path():
     return lhp
 
 def get_install_url():
+    '''Parse install url.'''
     config = get_config()
     url = config.get('TachibanaSite', 'install_url')
     if url.startswith('"') and url.endswith('"'):

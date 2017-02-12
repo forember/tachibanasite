@@ -32,13 +32,15 @@
 import csv, sys
 
 def parse_csv(csv_path, default=''):
-    with open(csv_path) as f:
-        headers = next(csv.reader(iter([next(f)])))
-        reader = csv.DictReader(f, fieldnames=headers, restval=default)
+    '''Convert CSV header row and data rows.'''
+    with open(csv_path) as csv_file:
+        headers = next(csv.reader(iter([next(csv_file)])))
+        reader = csv.DictReader(csv_file, fieldnames=headers, restval=default)
         rows = list(reader)
     return headers, rows
 
 def parse_decimal(*args, **kwargs):
+    '''Calls decimal.Decimal and raises a ValueError on InvalidOperation.'''
     import decimal
     try:
         return decimal.Decimal(*args, **kwargs)
@@ -77,15 +79,17 @@ def csv2table(csv_path, default='', sort_func=None, sort_reverse=False,
         '*{}*'.format(header) if header == active else header,
         quote_plus(header), int(header == active and not sort_reverse))
         for header in headers]
-    s = ' | '.join(header_markdown_list) + '\n'
-    s += ' | '.join('-'*len(headers)) + '\n'
+    table = ' | '.join(header_markdown_list) + '\n'
+    table += ' | '.join('-'*len(headers)) + '\n'
     for row in rows:
-        s += ' | '.join([str(row[field]) for field in headers]) + '\n'
-    return s
+        table += ' | '.join([str(row[field]) for field in headers]) + '\n'
+    return table
 
 def _get_sort_func_by_field(field_name):
-    def sort_func(d):
-        return d[field_name]
+    '''Return a function that accesses a item from its argument.'''
+    def sort_func(dictionary):
+        '''Returns a particular item from its argument.'''
+        return dictionary[field_name]
     return sort_func
 
 TACHIBANASITE_TPL_LIB_BINDINGS = {
