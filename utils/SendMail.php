@@ -17,6 +17,8 @@
 
     0.11.24 - Now checks that name, subject, and message are non-empty.
 
+    1.1.29  - Added mail filter.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -35,15 +37,32 @@
  */
 
 include 'ConfigIniUtils.php';
+include 'MarkdownUtils.php';
 
 $to = get_config_option('email');
 $from = get_config_option('sender_email');
 $installURL = get_config_option('install_url');
 $siteTitle = get_config_option('site_title');
 
-if (!($_POST['subject'] && $_POST['name'] && $_POST['message'])) {
+function mailSuccess() {
+    global $installURL;
+    header("Location: $installURL/pages/mail-success/");
+    die();
+}
+
+function mailFailure() {
+    global $installURL;
     header("Location: $installURL/pages/mail-failure/");
     die();
+}
+
+if (!($_POST['subject'] && $_POST['name'] && $_POST['message'])) {
+    mailFailure();
+}
+
+$filterPath = pathCommon('SendMailFilter.php');
+if (file_exists($filterPath)) {
+    include $filterPath;
 }
 
 $subject = "$siteTitle: " . $_POST['subject'];
@@ -67,9 +86,8 @@ if (preg_match('/^[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+$/', $replyTo)) {
 }
 
 if(mail($to, $subject, $message, $headers)) {
-    header("Location: $installURL/pages/mail-success/");
+    mailSuccess();
 } else {
-    header("Location: $installURL/pages/mail-failure/");
+    mailFailure();
 }
-die();
 ?>

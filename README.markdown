@@ -8,6 +8,15 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 1.1.29
+
+-   Added common file SendMailFilter.php
+
+## 0.12.20
+
+-   Made the TachibanaSite version link to the documentation.
+-   Added the hianchor module for highlighting the current anchor.
+
 ## 0.11.24
 
 -   Made the default theme main container more reasonably-sized on large
