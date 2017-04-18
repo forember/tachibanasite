@@ -60,7 +60,7 @@ a:hover {
 /* Normal markdown text. */
 .markdown-content p, .markdown-content li, .markdown-content blockquote {
     color: black;
-    font-family: sans-serif;
+    /*font-family: sans-serif;*/
 }
 
 /* Teletype markdown text. */

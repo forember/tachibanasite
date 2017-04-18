@@ -8,6 +8,10 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 1.4.18
+
+-   New "paper" theme.
+
 ## 1.1.29
 
 -   Added common file SendMailFilter.php
