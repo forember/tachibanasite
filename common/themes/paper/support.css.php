@@ -86,7 +86,7 @@ $presets = array(
 );
 
 foreach ($presets as $name => $_) {
-    $presets[$name]['cw'] = '900px';
+    $presets[$name]['cw'] = '1000px';
     $presets[$name]['cmw'] = '400px';
 }
 
