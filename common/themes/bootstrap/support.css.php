@@ -1,18 +1,20 @@
+<?php
+/* vim: set filetype=css : */
+header('Content-Type: text/css');
+?>
 /*
-    File:   modules/highlight.js.exec/hljs-exec.js
+    File:   common/themes/barebones/support.css.php
     Author: Chris McKinney
     Edited: Jul 14 2017
     Editor: Chris McKinney
 
     Description:
 
-    Starts highlighting on load.
+    Support for theme for webpages. PHP for color arguments.
 
     Edit History:
 
-    0.8.10  - Created. Moved content from utils.js.
-
-    1.7.14  - Added proper support for the "text" class.
+    1.7.14  - Created.
 
     License:
 
@@ -30,8 +32,25 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-
-window.loadActions.push(function() {
-    hljs.initHighlighting();
-    $(".text").addClass("hljs");
-})
+body {
+    color: black;
+    background-color: white;
+}
+#sidebar {
+    float: left;
+    padding-right: 1em;
+    background-color: white;
+}
+#container {
+    position: relative;
+    top: 50px;
+}
+.sideHeader {
+    margin: 5px;
+}
+#footer {
+    padding-top: 5px;
+    padding-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

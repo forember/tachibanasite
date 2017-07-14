@@ -22,6 +22,8 @@ header('Content-Type: text/css');
 
     1.4.16  - New theme.
 
+    1.7.14  - Made default color black.
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -141,6 +143,7 @@ body {
     font-size: 13px;
 
     text-align: center;
+    color: <?=$headerFColor?>;
 }
 
 .markdown-content p {

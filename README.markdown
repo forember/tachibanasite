@@ -2,11 +2,13 @@ Server software for <https://tachibanatech.com/> and <http://afrl.cse.sc.edu/>.
 
 Documentation at <https://tachibanatech.com/ts/>.
 
-# Planned
-
--   Real mobile support (Bootstrap?)
-
 # Version History
+
+## 1.7.14
+
+-   Added Bootstrap support.
+-   Added ability to disable modules in config.ini.
+-   Bug fixes.
 
 ## 1.4.18
 

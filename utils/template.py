@@ -2,7 +2,7 @@
 '''
     File:   utils/template.py
     Author: Chris McKinney
-    Edited: Aug 10 2016
+    Edited: Jul 14 2017
     Editor: Chris McKinney
 
     Description:
@@ -12,6 +12,8 @@
     Edit History:
 
     0.8.10  - Added module support.
+
+    1.7.14  - Added ability to disable modules.
 
     License:
 
@@ -49,6 +51,8 @@ def _get_tpl_lib_bindings():
     import importlib
     import os
     from os.path import dirname, realpath
+    import ConfigParser
+    from configIniUtils import get_config
     install_path = dirname(dirname(realpath(__file__)))
     modules_path = os.path.join(install_path, 'modules')
     sys.path.append(modules_path)
@@ -58,6 +62,12 @@ def _get_tpl_lib_bindings():
     for name in module_names:
         if '.' in name:
             continue
+        try:
+            if get_config().get('Modules', '{}_disabled'.format(name)
+                    ).lower() == 'yes':
+                continue
+        except ConfigParser.NoOptionError:
+            pass
         module_init = os.path.join(os.path.join(modules_path, name),
                 '__init__.py')
         if not os.path.isfile(module_init):

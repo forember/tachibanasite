@@ -2,7 +2,7 @@
 /*
     File:   utils/LoadJavascript.php
     Author: Chris McKinney
-    Edited: Aug 10 2016
+    Edited: Jul 14 2017
     Editor: Chris McKinney
 
     Description:
@@ -15,6 +15,8 @@
 
     0.8.10  - Added module support.
             - Added CSS loading.
+
+    1.7.14  - Added the ability to disable modules.
 
     License:
 
@@ -40,6 +42,9 @@ function get_url_array($iniPrefix, $urls) {
     $installPath = realpath(__DIR__ . '/..');
     $moduleDirs = scandir("$installPath/modules");
     foreach ($moduleDirs as $mname) {
+        if (get_config_option("${mname}_disabled", 'Modules')) {
+            continue;
+        }
         if ($mname != '.' && $mname != '..') {
             $mdir = "$installPath/modules/$mname";
             $mini = "$mdir/module.ini";

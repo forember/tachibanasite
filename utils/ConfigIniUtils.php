@@ -2,7 +2,7 @@
 /*
     File:   utils/ConfigIniUtils.php
     Author: Chris McKinney
-    Edited: May 21 2016
+    Edited: Jul 14 2017
     Editor: Chris McKinney
 
     Description:
@@ -12,6 +12,8 @@
     Edit History:
 
     0.5.21  - Added section parsing.
+
+    1.7.14  - Fixed bug when key not found in section when file exists.
 
     License:
 
@@ -38,6 +40,8 @@ function get_config_file_option($filename, $key, $section = false) {
             if (array_key_exists($section, $config)
                     && array_key_exists($key, $config[$section])) {
                 return $config[$section][$key];
+            } else {
+                return false;
             }
         } else {
             if (array_key_exists($key, $config)) {

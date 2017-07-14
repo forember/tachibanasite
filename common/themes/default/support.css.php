@@ -5,7 +5,7 @@ header('Content-Type: text/css');
 /*
     File:   common/themes/default/support.css.php
     Author: Chris McKinney
-    Edited: May 21 2016
+    Edited: Jul 14 2016
     Editor: Chris McKinney
 
     Description:
@@ -18,6 +18,8 @@ header('Content-Type: text/css');
             - Made image URLs relative.
 
     0.11.24 - Gave the main container a max width.
+
+    1.7.14  - Made default color black.
 
     License:
 
@@ -130,6 +132,7 @@ body {
     font-size: 12pt;
 
     text-align: center;
+    color: black;
 }
 
 #container {

@@ -1,18 +1,16 @@
 /*
-    File:   modules/highlight.js.exec/hljs-exec.js
+    File:   common/themes/barebones/theme.js
     Author: Chris McKinney
-    Edited: Jul 14 2017
+    Edited: Jul 14 2016
     Editor: Chris McKinney
 
     Description:
 
-    Starts highlighting on load.
+    Javascript for default theme.
 
     Edit History:
 
-    0.8.10  - Created. Moved content from utils.js.
-
-    1.7.14  - Added proper support for the "text" class.
+    1.7.14  - Created. Moved content from default.
 
     License:
 
@@ -30,8 +28,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-
-window.loadActions.push(function() {
-    hljs.initHighlighting();
-    $(".text").addClass("hljs");
+window.resizeActions.push(function() {
+    // Set the height of the content iframe.
+    var contentIFrame = document.getElementById('content-iframe');
+    if (contentIFrame != null) {
+        contentIFrame.height = 1;
+        contentIFrame.height =
+            contentIFrame.contentWindow.document.body.scrollHeight;
+    }
 })

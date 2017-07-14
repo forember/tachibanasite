@@ -12,6 +12,8 @@
 
     0.8.10  - Added function for install URL.
 
+    1.7.14  - Switched to SafeConfigParser
+
     License:
 
     Copyright 2016 Chris McKinney
@@ -39,7 +41,7 @@ CONFIG_PATHS = [os.path.join(INSTALL_PATH, 'common/config.ini'),
 def get_config():
     '''Get configuration object.'''
     import ConfigParser
-    config = ConfigParser.ConfigParser()
+    config = ConfigParser.SafeConfigParser()
     config.read(CONFIG_PATHS)
     return config
 
