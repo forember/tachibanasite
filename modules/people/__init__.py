@@ -148,7 +148,8 @@ def obfuscate_emails(page_seg):
     return output
 
 def person(name, about_loc, host=LOCAL_HOST, title=None, website=None,
-        do_obfuscate_emails=True, css_classes=None):
+        do_obfuscate_emails=True, css_classes=None,
+        photo_width=None, photo_height=None):
     '''Generate the markdown for a person entry on a page.'''
     if css_classes is None:
         css_classes = DEFAULT_CSS_CLASSES
@@ -177,7 +178,7 @@ def person(name, about_loc, host=LOCAL_HOST, title=None, website=None,
     from template import render_template_env
     rendered = render_template_env(PERSON_TEMPLATE_FILE, name=name,
             title=title, aboutme=aboutme, photo_url=photo_url, website=website,
-            css_classes=css_classes)
+            css_classes=css_classes, width=photo_width, height=photo_height)
     if do_obfuscate_emails:
         return obfuscate_emails(rendered)
     return rendered
@@ -186,7 +187,8 @@ class Person(object):
     '''Convenience class for building up values to pass to `person`.'''
 
     def __init__(self, name, about_loc, host=LOCAL_HOST, title=None,
-            website=None, css_classes=None):
+            website=None, do_obfuscate_emails=True, css_classes=None,
+            photo_width=None, photo_height=None):
         '''Arguments are the same as for `person`.'''
         if css_classes is None:
             css_classes = DEFAULT_CSS_CLASSES
@@ -195,12 +197,16 @@ class Person(object):
         self.host = host
         self.title = title
         self.website = website
+        self.do_obfuscate_emails = do_obfuscate_emails
         self.css_classes = css_classes
+        self.photo_width = photo_width
+        self.photo_height = photo_height
 
     def person(self):
         '''Calls `person`.'''
         return person(self.name, self.about_loc, self.host, self.title,
-                self.website, self.css_classes)
+                self.website, self.do_obfuscate_emails, self.css_classes,
+                self.photo_width, self.photo_height)
 
 TACHIBANASITE_TPL_LIB_BINDINGS = {
         'people': sys.modules[__name__],

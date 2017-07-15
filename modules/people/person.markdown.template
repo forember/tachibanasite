@@ -2,12 +2,16 @@
 %'''
 %   File:   utils/person.markdown.template
 %   Author: Chris McKinney
-%   Edited: Mar 01 2016
+%   Edited: Jul 14 2017
 %   Editor: Chris McKinney
 %
 %   Description:
 %
 %   Default person template.
+%
+%   Edit History:
+%
+%   1.7.15  - Added width and height attributes.
 %
 %   License:
 %
@@ -31,7 +35,11 @@
 %if photo_url:
 ![Photo of {{name}}][{{name}} Photo]
 
+%if width and height:
+[{{name}} Photo]: {{!photo_url}} "{{name}}" {.shadow .sidephoto .person-photo width={{width}} height={{height}}}
+%else:
 [{{name}} Photo]: {{!photo_url}} "{{name}}" {.shadow .sidephoto .person-photo}
+%end
 %end
 
 %if website:
