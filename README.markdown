@@ -4,6 +4,11 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 1.7.15
+
+-   Now that we have real mobile support, it's about time the `people` module
+    got the ability to set photo dimensions. Only took a year and a half.
+
 ## 1.7.14
 
 -   Added Bootstrap support.
