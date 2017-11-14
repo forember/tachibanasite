@@ -1,6 +1,6 @@
 <?php
 /*
-    File:   common/themes/default/StandardPage.php
+    File:   ./common/themes/default/StandardPage.php
     Author: Chris McKinney
     Edited: Aug 10 2016
     Editor: Chris McKinney

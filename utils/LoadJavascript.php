@@ -1,6 +1,6 @@
 <?php
 /*
-    File:   utils/LoadJavascript.php
+    File:   ./utils/LoadJavascript.php
     Author: Chris McKinney
     Edited: Jul 14 2017
     Editor: Chris McKinney

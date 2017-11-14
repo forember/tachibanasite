@@ -1,5 +1,5 @@
 '''
-    File:   utils/configIniUtils.py
+    File:   ./utils/configIniUtils.py
     Author: Chris McKinney
     Edited: Aug 10 2016
     Editor: Chris McKinney

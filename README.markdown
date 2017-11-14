@@ -4,6 +4,11 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 1.8.0
+
+-   Bootstrap 4 Beta 2
+-   New theme: Colored Pencil
+
 ## 1.7.15
 
 -   Now that we have real mobile support, it's about time the `people` module

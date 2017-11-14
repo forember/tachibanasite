@@ -1,6 +1,6 @@
 <?php
 /*
-    File:   utils/SendMail.php
+    File:   ./utils/SendMail.php
     Author: Chris McKinney
     Edited: May 21 2016
     Editor: Chris McKinney

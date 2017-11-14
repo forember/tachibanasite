@@ -1,5 +1,5 @@
 /*
-    File:   common/themes/default/theme.js
+    File:   ./common/themes/paper/theme.js
     Author: Chris McKinney
     Edited: Aug 10 2016
     Editor: Chris McKinney

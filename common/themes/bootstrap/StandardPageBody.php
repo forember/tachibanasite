@@ -1,6 +1,6 @@
 <?php
 /*
-    File:   common/themes/bootstrap/StandardPageBody.php
+    File:   ./common/themes/bootstrap/StandardPageBody.php
     Author: Chris McKinney
     Edited: July 14 2017
     Editor: Chris McKinney

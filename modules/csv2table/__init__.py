@@ -1,5 +1,5 @@
 '''
-    File:   modules/csv2table/__init__.py
+    File:   ./modules/csv2table/__init__.py
     Author: Chris McKinney
     Edited: Aug 11 2016
     Editor: Chris McKinney

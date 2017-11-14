@@ -1,5 +1,5 @@
 /*
-    File:   modules/nosidebar/nosidebar.js
+    File:   ./modules/nosidebar/nosidebar.js
     Author: Chris McKinney
     Edited: Aug 11 2016
     Editor: Chris McKinney

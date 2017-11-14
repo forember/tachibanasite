@@ -1,6 +1,6 @@
 <?php
 /*
-    File:   blank/index.php
+    File:   ./pages/mail-failure/index.php
     Author: Chris McKinney
     Edited: May 22 2016
     Editor: Chris McKinney

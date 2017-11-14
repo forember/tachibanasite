@@ -1,5 +1,5 @@
 '''
-    File:   modules/people/__init__.py
+    File:   ./modules/people/__init__.py
     Author: Chris McKinney
     Edited: Aug 10 2016
     Editor: Chris McKinney

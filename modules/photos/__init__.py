@@ -1,5 +1,5 @@
 '''
-    File:   modules/photos/__init__.py
+    File:   ./modules/photos/__init__.py
     Author: Chris McKinney
     Edited: Aug 22 2016
     Editor: Chris McKinney

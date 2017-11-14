@@ -1,6 +1,6 @@
 <?php
 /*
-    File:   utils/Theme.php
+    File:   ./utils/Theme.php
     Author: Chris McKinney
     Edited: May 21 2016
     Editor: Chris McKinney

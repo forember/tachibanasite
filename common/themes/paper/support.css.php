@@ -3,7 +3,7 @@
 header('Content-Type: text/css');
 ?>
 /*
-    File:   common/themes/paper/support.css.php
+    File:   ./common/themes/paper/support.css.php
     Author: Chris McKinney
     Edited: May 21 2016
     Editor: Chris McKinney

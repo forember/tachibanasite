@@ -1,5 +1,5 @@
 /*
-    File:   modules/hianchir/hianchor.js
+    File:   ./modules/hianchor/hianchor.js
     Author: Chris McKinney
     Edited: Aug 10 2016
     Editor: Chris McKinney

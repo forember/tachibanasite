@@ -1,5 +1,5 @@
 /*
-    File:   common/themes/barebones/theme.js
+    File:   ./common/themes/barebones/theme.js
     Author: Chris McKinney
     Edited: Jul 14 2016
     Editor: Chris McKinney

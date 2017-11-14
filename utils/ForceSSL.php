@@ -1,6 +1,6 @@
 <?php
 /*
-    File:   utils/ForceSSL.php
+    File:   ./utils/ForceSSL.php
     Author: Chris McKinney
     Edited: Mar 01 2016
     Editor: Chris McKinney

@@ -1,5 +1,5 @@
 /*
-    File:   modules/mobiletext/mobiletext.js
+    File:   ./modules/bootstrapify/bootstrapify.js
     Author: Chris McKinney
     Edited: Aug 10 2016
     Editor: Chris McKinney

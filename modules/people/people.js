@@ -1,5 +1,5 @@
 /*
-    File:   modules/people/people.js
+    File:   ./modules/people/people.js
     Author: Chris McKinney
     Edited: Aug 10 2016
     Editor: Chris McKinney

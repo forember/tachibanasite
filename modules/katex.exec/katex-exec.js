@@ -1,5 +1,5 @@
 /*
-    File:   modules/katex.exec/katex-exec.js
+    File:   ./modules/katex.exec/katex-exec.js
     Author: Chris McKinney
     Edited: Sep 23 2016
     Editor: Chris McKinney

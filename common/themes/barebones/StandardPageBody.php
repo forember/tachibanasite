@@ -1,6 +1,6 @@
 <?php
 /*
-    File:   common/themes/barebones/StandardPageBody.php
+    File:   ./common/themes/barebones/StandardPageBody.php
     Author: Chris McKinney
     Edited: May 21 2016
     Editor: Chris McKinney
