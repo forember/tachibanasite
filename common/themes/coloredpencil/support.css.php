@@ -64,6 +64,7 @@ div.sideHeader {
     padding-bottom: 0px;
     padding-left: 10px;
     padding-right: 10px;
+    font-size: 85%;
 }
 #navcontent {
     border-right: solid black 2pt;
