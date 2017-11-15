@@ -201,6 +201,11 @@ a:hover {
 .markdown-content code, .markdown-content pre {
     color: <?=$text?>;
     background-color: transparent;
+    border-radius: 0.25rem;
+}
+.markdown-content pre {
+    font-size: 10pt;
+    line-height: 14pt;
 }
 .markdown-content code {
     background-color: rgba(0, 0, 0, <?=1 - 0xf8/255.0?>);
