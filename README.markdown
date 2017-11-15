@@ -4,6 +4,10 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 1.8.1
+
+-   Colored Pencil now has color presets.
+
 ## 1.8.0
 
 -   Bootstrap 4 Beta 2
