@@ -202,6 +202,9 @@ a:hover {
     color: <?=$text?>;
     background-color: transparent;
 }
+.markdown-content code {
+    background-color: rgba(0, 0, 0, <?=1 - 0xf8/255.0?>);
+}
 
 .markdown-content abbr {
     text-decoration: underline dotted <?=$text?>;
