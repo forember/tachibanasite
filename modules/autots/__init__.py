@@ -187,14 +187,7 @@ def match_line(source_lines, pattern, group=0, filt=lambda s: s):
     except TypeError:
         return None
 
-def config(args):
-    ask = Asker(args.interactive)
-    page_path = pjoin(SITE_PATH, args.page)
-    config_ini = pjoin(page_path, 'config.ini')
-    source_lines = read_existing(config_ini, ask, args.force)
-    if source_lines is None:
-        return 1
-    # Parse Existing Config
+def parse_config(source_lines):
     def match_source(pattern, group=0, filt=lambda s: s):
         return match_line(source_lines, pattern, group, filt)
     source = argparse.Namespace()
@@ -221,6 +214,75 @@ def config(args):
         source.theme_ini = source_lines[source_lines.index('[Theme]') + 1:]
     except ValueError:
         source.theme_ini = []
+    return source
+
+def configure_theme(theme, config_ini_lines, args, source, ask):
+    # Theme Compatibility
+    if theme in ['coloredpencil', 'bootstrap']:
+        config_ini_lines.extend(['', '[Modules]', 'mobiletext_disabled = yes'])
+    if theme == 'coloredpencil':
+        config_ini_lines.append('bootstrap4_disabled = no')
+    elif theme == 'bootstrap':
+        config_ini_lines.extend(['bootstrap_disabled = no',
+            'bootstrapify_disabled = no'])
+    # Additional Theme Configuration
+    if args.theme_ini:
+        config_ini_lines.extend(['', '[Theme]'])
+        config_ini_lines.extend(args.theme_ini)
+    elif source.theme_ini and not ask.yes_no(
+            'Would you like to overwrite the theme configuration?', None,
+            theme != source.theme):
+        config_ini_lines.extend(['', '[Theme]'])
+        config_ini_lines.extend(source.theme_ini)
+    elif theme == 'default':
+        preset = ask.choice('Available color schemes for default theme:',
+                'Select a scheme', ['default', 'red', 'green', 'teal',
+                    'blue', 'purple'], 'green')
+        config_ini_lines.extend(['', '[Theme]',
+            'preset = "{}"'.format(ini_quote_path(preset))])
+    elif theme == 'coloredpencil':
+        preset = ask.choice(
+                'Available color schemes for colored pencil theme:',
+                'Select a scheme', ['default', 'red', 'legal', 'celery',
+                    'periwinkle', 'tapioca', 'salmon', 'colorful',
+                    'custom'], 'default')
+        caleb = ask.yes_no('Should headers be the same color as links?',
+                None, False);
+        if preset == 'custom':
+            bg = ask.string('What color should the background be?', None,
+                    '#eee')
+            text = ask.string('What color should the text be?', None,
+                    '#111')
+            link = ask.string('What color should the links be?', None,
+                    '#33c')
+            config_ini_lines.extend(['', '[Theme]',
+                'bg = "{}"'.format(ini_quote_path(bg)),
+                'text = "{}"'.format(ini_quote_path(text)),
+                'link = "{}"'.format(ini_quote_path(link))])
+            if not caleb:
+                head = ask.string('What color should the headers be?',
+                        None, '#555')
+                config_ini_lines.append('head = "{}"'.format(
+                    ini_quote_path(head)))
+        else:
+            dark = ask.yes_no(
+                    'Would you prefer the dark version of this scheme?',
+                    None, False)
+            config_ini_lines.extend(['', '[Theme]',
+                'preset = "{}"'.format(ini_quote_path(preset)),
+                'dark = {}'.format('yes' if dark else 'no')])
+        if caleb:
+            config_ini_lines.append('caleb = yes')
+
+def config(args):
+    ask = Asker(args.interactive)
+    page_path = pjoin(SITE_PATH, args.page)
+    config_ini = pjoin(page_path, 'config.ini')
+    source_lines = read_existing(config_ini, ask, args.force)
+    if source_lines is None:
+        return 1
+    # Parse Existing Config
+    source = parse_config(source_lines)
     # Title
     title = ask.string('What is the title of your site?', args.title,
             default_arg(source.title, ''))
@@ -304,62 +366,7 @@ def config(args):
             'recursive_common_override = {}'.format(
                 'yes' if recursive else 'no'),
             'theme_name = "{}"'.format(ini_quote_path(theme))]
-    # Theme Compatibility
-    if theme in ['coloredpencil', 'bootstrap']:
-        config_ini_lines.extend(['', '[Modules]', 'mobiletext_disabled = yes'])
-    if theme == 'coloredpencil':
-        config_ini_lines.append('bootstrap4_disabled = no')
-    elif theme == 'bootstrap':
-        config_ini_lines.extend(['bootstrap_disabled = no',
-            'bootstrapify_disabled = no'])
-    # Additional Theme Configuration
-    if args.theme_ini:
-        config_ini_lines.extend(['', '[Theme]'])
-        config_ini_lines.extend(args.theme_ini)
-    elif source.theme_ini and not ask.yes_no(
-            'Would you like to overwrite the theme configuration?', None,
-            theme != source.theme):
-        config_ini_lines.extend(['', '[Theme]'])
-        config_ini_lines.extend(source.theme_ini)
-    elif theme == 'default':
-        preset = ask.choice('Available color schemes for default theme:',
-                'Select a scheme', ['default', 'red', 'green', 'teal',
-                    'blue', 'purple'], 'green')
-        config_ini_lines.extend(['', '[Theme]',
-            'preset = "{}"'.format(ini_quote_path(preset))])
-    elif theme == 'coloredpencil':
-        preset = ask.choice(
-                'Available color schemes for colored pencil theme:',
-                'Select a scheme', ['default', 'red', 'legal', 'celery',
-                    'periwinkle', 'tapioca', 'salmon', 'colorful',
-                    'custom'], 'default')
-        caleb = ask.yes_no('Should headers be the same color as links?',
-                None, False);
-        if preset == 'custom':
-            bg = ask.string('What color should the background be?', None,
-                    '#eee')
-            text = ask.string('What color should the text be?', None,
-                    '#111')
-            link = ask.string('What color should the links be?', None,
-                    '#33c')
-            config_ini_lines.extend(['', '[Theme]',
-                'bg = "{}"'.format(ini_quote_path(bg)),
-                'text = "{}"'.format(ini_quote_path(text)),
-                'link = "{}"'.format(ini_quote_path(link))])
-            if not caleb:
-                head = ask.string('What color should the headers be?',
-                        None, '#555')
-                config_ini_lines.append('head = "{}"'.format(
-                    ini_quote_path(head)))
-        else:
-            dark = ask.yes_no(
-                    'Would you prefer the dark version of this scheme?',
-                    None, False)
-            config_ini_lines.extend(['', '[Theme]',
-                'preset = "{}"'.format(ini_quote_path(preset)),
-                'dark = {}'.format('yes' if dark else 'no')])
-        if caleb:
-            config_ini_lines.append('caleb = yes')
+    configure_theme(theme, config_ini_lines, args, source, ask)
     return show_confirm_write(config_ini, config_ini_lines, ask)
 
 def copyright(args):
@@ -548,7 +555,7 @@ def _create_parser():
     header_parser.add_argument('-m', '--no-linked', action='store_const',
             const=False, dest='linked', help='Header is plain text.')
     header_parser.add_argument('-t', '--header', '--text',
-            help='Header text to go at the top of pages (markdown).')
+            help='Header text to go at the top of pages (markdown template).')
     # Install Subcommand
     install_parser = subparsers.add_parser('install',
             help='Install TachibanaSite.')
