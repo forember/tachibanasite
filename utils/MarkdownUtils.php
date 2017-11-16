@@ -115,8 +115,8 @@ function mdTpl($filename) {
     $arg1 = escapeshellarg("$installPath/utils/template.py");
     $arg2 = escapeshellarg(json_encode($_GET));
     $arg3 = escapeshellarg($filename);
-    //echo "<!-- python $arg1 $arg2 $arg3 -->";
-    return mdText(shell_exec("python $arg1 $arg2 $arg3 2>&1"));
+    //echo "<!-- python2 $arg1 $arg2 $arg3 -->";
+    return mdText(shell_exec("python2 $arg1 $arg2 $arg3 2>&1"));
 }
 
 // Get a common override file path, with checks for template files

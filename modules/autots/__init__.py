@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import argparse
 import os
@@ -148,8 +148,8 @@ def read_existing(file_path, ask, force):
             return None
     # Read Existing Config
     source_lines = []
-    if os.path.isfile(config_ini):
-        with open(config_ini) as f:
+    if os.path.isfile(file_path):
+        with open(file_path) as f:
             source_lines = [line.strip() for line in f]
     return source_lines
 
@@ -171,7 +171,21 @@ def show_confirm_write(file_path, lines, ask):
         os.makedirs(page_path, 0775)
     with open(file_path, 'w') as f:
         f.writelines([line + '\n' for line in lines])
+    print 'Written.'
     return 0
+
+def match_line(source_lines, pattern, group=0, filt=lambda s: s):
+    for source_line in source_lines:
+        m = re.match(pattern.replace(' ', '\\s*') + '$', source_line)
+        if m:
+            try:
+                return [filt(g) for g in m.group(*group)]
+            except TypeError:
+                return filt(m.group(group))
+    try:
+        return [None] * len(group)
+    except TypeError:
+        return None
 
 def config(args):
     ask = Asker(args.interactive)
@@ -182,10 +196,7 @@ def config(args):
         return 1
     # Parse Existing Config
     def match_source(pattern, group=0, filt=lambda s: s):
-        for source_line in source_lines:
-            m = re.match(pattern.replace(' ', '\\s*') + '$', source_line)
-            if m:
-                return m.group(group)
+        return match_line(source_lines, pattern, group, filt)
     source = argparse.Namespace()
     source.title = match_source('site_title = "(.*)"', 1, ini_unquote_html)
     source.local_host_path = match_source('local_host_path = "(.*)"', 1,
@@ -365,17 +376,118 @@ def copyright(args):
     if len(source_lines) > 1:
         source.notice = source_lines[1]
         if source.notice.startswith('&copy;'):
-            source.notice = source.notice[6:].strip()
+            source.notice = ini_unquote_html(source.notice[6:].strip())
     # Ask for Notice
     notice = ask.string('Copyright notice (c)', args.notice,
             default_arg(source.notice, str(datetime.date.today().year)))
     if notice:
-        notice = '&copy; {}'.format(notice)
+        notice = '&copy; {}'.format(ini_quote_html(notice))
     # Generate
     copy_md_lines = [
             '<!-- !!AUTOTS!! Created by autots. Do not manually edit. -->',
             notice]
     return show_confirm_write(copy_md, copy_md_lines, ask)
+
+def header(args):
+    ask = Asker(args.interactive)
+    page_path = pjoin(SITE_PATH, args.page)
+    head_md = pjoin(page_path, 'header.markdown.template')
+    source_lines = read_existing(head_md, ask, args.force)
+    if source_lines is None:
+        return 1
+    # Parse Existing
+    source = argparse.Namespace()
+    source.linked, source.header = match_line(source_lines,
+            r'# (\[)?(.*)(?(1)\]\(\{\{base\}\}/\))',
+            (1, 2), ini_unquote_html)
+    if source.header is not None:
+        source.linked = bool(source.linked)
+    # Ask for Header and Linked
+    header = ask.string('Header text', args.header,
+            default_arg(source.header, ''))
+    linked = ask.yes_no('Should the header be a link home?', args.linked,
+            default_arg(source.linked, True))
+    # Generate
+    head_md_lines = [
+            '<!-- !!AUTOTS!! Created by autots. Do not manually edit. -->']
+    if linked:
+        head_md_lines.extend([
+            '<%', 'import os.path, configIniUtils',
+            'base = os.path.dirname(configIniUtils.get_install_url())', '%>',
+            '# [{}]({{{{base}}}}/)'.format(ini_quote_html(header))])
+    else:
+        head_md_lines.append('# {}'.format(ini_quote_html(header)))
+    return show_confirm_write(head_md, head_md_lines, ask)
+
+def check_python_deps():
+    failures = []
+    try:
+        import bottle
+    except ImportError:
+        failures.append('bottle')
+    try:
+        from PIL import Image
+    except ImportError:
+        failures.append('PIL')
+    try:
+        import requests
+    except ImportError:
+        failures.append('requests')
+    return failures
+
+def install_python_deps():
+    try:
+        from setuptools.command import easy_install
+        have_easy_install = True
+    except ImportError:
+        have_easy_install = False
+    try:
+        import pip
+        have_pip = True
+    except ImportError:
+        try:
+            import ensurepip
+            ensurepip.bootstrap()
+            import pip
+        except ImportError:
+            have_pip = False
+    if have_easy_install and not have_pip:
+        easy_install.main(['--user', '--upgrade', 'pip'])
+        try:
+            import pip
+            have_pip = True
+        except ImportError:
+            have_pip = False
+    if have_pip:
+        if pip.main(['install', '--user', '--upgrade',
+            'bottle', 'PIL', 'requests']) != 0:
+            have_pip = False
+    if have_easy_install and (not have_pip or check_python_deps()):
+        easy_install.main(['--user', '--upgrade', 'bottle', 'PIL', 'requests'])
+    failures = check_python_deps()
+    if 'bottle' in failures:
+        import urllib2
+        open(pjoin(pjoin(INSTALL_PATH, 'utils'), 'bottle.py'), 'w').write(
+                urllib2.urlopen('https://bottlepy.org/bottle.py').read())
+    if 'PIL' in failures:
+        print 'Warning: Could not install PIL. Some modules will not work.'
+    if 'requests' in failures:
+        print ('Warning: Could not install requests. Some modules will not'
+                + ' work.')
+
+def install(args):
+    if args.deps:
+        install_python_deps()
+    base_arg_list = ['--page', args.page]
+    if args.force:
+        base_arg_list.append('--force')
+    if not args.interactive:
+        base_arg_list.append('--non-interactive')
+    def do_subcommand(func, name):
+        func(ARG_PARSER.parse_args(base_arg_list + [name]))
+    do_subcommand(config, 'config')
+    do_subcommand(copyright, 'copyright')
+    do_subcommand(header, 'header')
 
 def _create_parser():
     parser = argparse.ArgumentParser(
@@ -427,8 +539,21 @@ def _create_parser():
     # Copyright Subcommand
     copyright_parser = subparsers.add_parser('copyright',
             help='Set copyright information.')
-    copyright_parser.add_argument('--notice',
+    copyright_parser.add_argument('-c', '--notice',
             help='Copyright notice (e.g. 2017 Chris McKinney).')
+    # Header Subcommand
+    header_parser = subparsers.add_parser('header', help='Set header.')
+    header_parser.add_argument('-l', '--linked', action='store_const',
+            const=True, help='Header is a link to home.')
+    header_parser.add_argument('-m', '--no-linked', action='store_const',
+            const=False, dest='linked', help='Header is plain text.')
+    header_parser.add_argument('-t', '--header', '--text',
+            help='Header text to go at the top of pages (markdown).')
+    # Install Subcommand
+    install_parser = subparsers.add_parser('install',
+            help='Install TachibanaSite.')
+    install_parser.add_argument('-m', '--no-deps', action='store_false',
+            dest='deps', help="Don't attempt to install dependencies.")
     return parser
 
 ARG_PARSER = _create_parser()
@@ -441,10 +566,12 @@ def main():
         status = config(args)
     elif args.subcommand == 'copyright':
         status = copyright(args)
+    elif args.subcommand == 'install':
+        status = install(args)
     else:
         print 'Unknown subcommand.'
         status = 1
-    raise SystemExit(status)
+    return status
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())
