@@ -456,8 +456,8 @@ def delete(args):
     if os.path.islink(page_path):
         if ask.yes_no('{} is a link. Follow it?', args.follow_link, False):
             page_path = os.path.realpath(page_path)
-        elif recursive = ask.yes_no('Do you want to delete the link?',
-                args.recursive, False):
+        elif ask.yes_no('Do you want to delete the link?', args.recursive,
+                False):
             print 'The link {} will be deleted.'.format(page_path)
             do_deletion = lambda: os.remove(page_path)
         else:

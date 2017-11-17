@@ -4,6 +4,10 @@ Documentation at <https://tachibanatech.com/ts/>.
 
 # Version History
 
+## 1.8.2
+
+-   PHP Markdown is now a submodule.
+
 ## 1.8.1
 
 -   Colored Pencil now has color presets.
