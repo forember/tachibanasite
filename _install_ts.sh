@@ -23,6 +23,9 @@ if ! which git; then
 fi
 [ -d tachibanasite ] || \
     git clone https://github.com/NighttimeDriver50000/tachibanasite.git
+cd tachibanasite
+git submodule update --init --recursive
+cd ..
 [ -h autots ] || ln -s tachibanasite/modules/autots/__init__.py autots
 if [ "$#" = 0 ]; then
     ./autots install || true
