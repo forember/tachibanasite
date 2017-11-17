@@ -24,7 +24,11 @@ fi
 [ -d tachibanasite ] || \
     git clone https://github.com/NighttimeDriver50000/tachibanasite.git
 [ -h autots ] || ln -s tachibanasite/modules/autots/__init__.py autots
-./autots install || true
+if [ "$#" = 0 ]; then
+    ./autots install || true
+else
+    ./autots "$@" || true
+fi
 if [ -f build/pip-delete-this-directory.txt ] \
         && [ "$(ls build | wc -l)" = 1 ]; then
     rm -r build

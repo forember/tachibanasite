@@ -43,6 +43,7 @@ INSTALL_PATH = dirname(dirname(DIRNAME0))
 SITE_PATH = dirname(INSTALL_PATH)
 
 FORCE_TEMPLATES = True
+AUTOTS_NOTICE = '!!AUTOTS!! Created by autots. Do not manually edit.'
 
 def checkauto(filename):
     if not os.path.exists(filename):
@@ -384,7 +385,7 @@ def config(args):
                 default_arg(source.theme, 'coloredpencil'))
     # Generate Config
     config_ini_lines = [
-            '; !!AUTOTS!! Created by autots. Do not manually edit.',
+            '; {}'.format(AUTOTS_NOTICE),
             '[TachibanaSite]',
             'site_title = "{}"'.format(ini_quote_html(title)),
             'local_host_path = "{}"'.format(ini_quote_path(local_host_path)),
@@ -420,10 +421,77 @@ def copyright(args):
     if notice:
         notice = '&copy; {}'.format(ini_quote_html(notice))
     # Generate
-    copy_md_lines = [
-            '<!-- !!AUTOTS!! Created by autots. Do not manually edit. -->',
-            notice]
+    copy_md_lines = ['<!-- {} -->'.format(AUTOTS_NOTICE), notice]
     return show_confirm_write(copy_md, copy_md_lines, ask)
+
+def create(args):
+    ask = Asker(args.interactive)
+    page_path = pjoin(SITE_PATH,
+            'home' if args.page == 'common' else args.page)
+    index_php = pjoin(page_path, 'index.php')
+    source_lines = read_existing(index_php, ask, args.force)
+    if source_lines is None:
+        return 1
+    # Get path to FindStandardPage.php
+    fsp_path = os.path.relpath(pjoin(pjoin(INSTALL_PATH, 'utils'),
+        'FindStandardPage.php'), page_path)
+    # Generate
+    index_php_lines = [
+            '<?php // {}'.format(AUTOTS_NOTICE),
+            "include '{}'; ?>".format(ini_quote_path(fsp_path))]
+    return show_confirm_write(index_php, index_php_lines, ask)
+
+def delete(args):
+    import shutil
+    ask = Asker(args.interactive)
+    page = ask.string('What page do you want to delete? ',
+            None if args.page == 'common' else args.page, 'common')
+    if page == 'common':
+        print 'Refusing to delete the common directory. If you want to'
+        print 'remove TachibanaSite, you can just delete the site directory.'
+        print 'Aborting.'
+        return 1
+    page_path = pjoin(SITE_PATH, args.page)
+    do_deletion = None
+    if os.path.islink(page_path):
+        if ask.yes_no('{} is a link. Follow it?', args.follow_link, False):
+            page_path = os.path.realpath(page_path)
+        elif recursive = ask.yes_no('Do you want to delete the link?',
+                args.recursive, False):
+            print 'The link {} will be deleted.'.format(page_path)
+            do_deletion = lambda: os.remove(page_path)
+        else:
+            print 'Refusing to delete symlinked page. Aborting.'
+            return 1
+    if do_deletion is None:
+        has_subpages = False
+        for root, dirnames, filenames in os.walk(page_path):
+            if 'index.php' in filenames and os.path.realpath(root) != page_path:
+                has_subpages = True
+                break
+        recursive = True
+        erase = False
+        if has_subpages:
+            recursive = ask.yes_no('Do you also want to delete subpages?',
+                    args.recursive, False)
+            if not recursive:
+                erase = ask.yes_no(('Erase all non-subpage content that may be' +
+                    ' used by subpages?'), args.erase, False)
+        if recursive:
+            print 'The directory {} will be deleted.'.format(page_path)
+            do_deletion = lambda: shutil.rmtree(page_path)
+        elif erase:
+            pass # TODO
+        else:
+            index_php = pjoin(page_path, 'index.php')
+            print 'The file {} will be deleted.'.format(index.php)
+            do_deletion = lambda: os.remove(index_php)
+    if not ask.yes_no('Are you sure you want to do this?', None,
+            not args.interactive):
+        print 'Aborting.'
+        return 1
+    do_deletion()
+    print 'Deleted.'
 
 def header(args):
     ask = Asker(args.interactive)
@@ -445,8 +513,7 @@ def header(args):
     linked = ask.yes_no('Should the header be a link home?', args.linked,
             default_arg(source.linked, True))
     # Generate
-    head_md_lines = [
-            '<!-- !!AUTOTS!! Created by autots. Do not manually edit. -->']
+    head_md_lines = ['<!-- {} -->'.format(AUTOTS_NOTICE)]
     if linked:
         head_md_lines.extend([
             '<%', 'import os.path, configIniUtils',
@@ -559,6 +626,7 @@ def install(args):
     status = do_subcommand(header, 'header')
     if status:
         return status
+    status = do_subcommand(create, 'create')
     return 0
 
 def upgrade(args):
@@ -574,6 +642,7 @@ def upgrade(args):
         git = os.path.expanduser('~/bin/git')
     status = subprocess.call([git, 'pull'], cwd=INSTALL_PATH)
     if status == 0:
+        print 'Running install for new version.'
         return subprocess.call(command, cwd=SITE_PATH)
     else:
         return status
@@ -625,16 +694,30 @@ def _create_parser():
                 action='store_const', const=True, help='Enable templating.')
     config_parser.add_argument('--theme-ini', nargs='*',
             help='Additional lines of INI after [Theme].')
+    # Content Subcommand
     # Copyright Subcommand
     copyright_parser = subparsers.add_parser('copyright',
             help='Set copyright information.')
     copyright_parser.add_argument('-c', '--notice',
             help='Copyright notice (e.g. 2017 Chris McKinney).')
+    # Create Subcommand
+    create_parser = subparsers.add_parser('create', help=('Create a page.' +
+        ' Note: Attempting to create page "common" will create page "home."'))
+    # Delete Subcommand
+    delete_parser = subparsers.add_parser('delete', help='Delete a page.')
+    delete_parser.add_argument('-e', '--erase', '--always-erase',
+            action='store_const', const=True,
+            help=('Fully erase all non-subpage content even if there are' +
+                ' subpages that may use it.'))
+    delete_parser.add_argument('-l', '--follow-link', action='store_const',
+            const=True, help='Follow if the page directory is a symlink.')
+    delete_parser.add_argument('-r', '--recursive', action='store_const',
+            const=True, help='Also delete subpages. Implies -e.')
     # Header Subcommand
     header_parser = subparsers.add_parser('header', help='Set header.')
     header_parser.add_argument('-l', '--linked', action='store_const',
             const=True, help='Header is a link to home.')
-    header_parser.add_argument('-m', '--no-linked', action='store_const',
+    header_parser.add_argument('-m', '--not-linked', action='store_const',
             const=False, dest='linked', help='Header is plain text.')
     header_parser.add_argument('-t', '--header', '--text',
             help='Header text to go at the top of pages (markdown template).')
@@ -660,6 +743,10 @@ def main():
         status = config(args)
     elif args.subcommand == 'copyright':
         status = copyright(args)
+    elif args.subcommand == 'create':
+        status = create(args)
+    elif args.subcommand == 'delete':
+        status = delete(args)
     elif args.subcommand == 'header':
         status = header(args)
     elif args.subcommand == 'install':
