@@ -1,4 +1,34 @@
 #!/usr/bin/env python2
+'''
+    File:   ./modules/autots/__init__.py
+    Author: Chris McKinney
+    Edited: Nov 17 2017
+    Editor: Chris McKinney
+
+    Description:
+
+    Script for managing a TachibanaSite install.
+
+    Edit History:
+
+    1.9.0   - Created module.
+
+    License:
+
+    Copyright 2017 Chris McKinney
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not
+    use this file except in compliance with the License.  You may obtain a copy
+    of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+'''
 
 import argparse
 import os
@@ -435,7 +465,7 @@ def check_python_deps():
     try:
         from PIL import Image
     except ImportError:
-        failures.append('PIL')
+        failures.append('Pillow')
     try:
         import requests
     except ImportError:
@@ -443,11 +473,14 @@ def check_python_deps():
     return failures
 
 def install_python_deps():
+    print 'install: Installing dependencies.'
     try:
         from setuptools.command import easy_install
         have_easy_install = True
     except ImportError:
         have_easy_install = False
+    print 'install: easy_install: {}present'.format(
+            '' if have_easy_install else 'not ')
     try:
         import pip
         have_pip = True
@@ -456,45 +489,94 @@ def install_python_deps():
             import ensurepip
             ensurepip.bootstrap()
             import pip
-        except ImportError:
-            have_pip = False
-    if have_easy_install and not have_pip:
-        easy_install.main(['--user', '--upgrade', 'pip'])
-        try:
-            import pip
             have_pip = True
         except ImportError:
             have_pip = False
-    if have_pip:
-        if pip.main(['install', '--user', '--upgrade',
-            'bottle', 'PIL', 'requests']) != 0:
-            have_pip = False
+    print 'install: pip: {}present'.format('' if have_pip else 'not ')
+    had_pip = have_pip
+    pip_via_ei = False
+    for x in xrange(2):
+        if have_easy_install and not have_pip and not pip_via_ei:
+            print 'install: Installing pip via easy_install...'
+            easy_install.main(['--user', '--upgrade', 'pip'])
+            try:
+                import pip
+                have_pip = True
+                pip_via_ei = True
+                print 'install: Successful.'
+            except ImportError:
+                have_pip = False
+                print 'install: Not successful.'
+        if have_pip and (x == 0 or (pip_via_ei and not had_pip)):
+            print 'install: Installing dependencies via pip...'
+            if pip.main(['install', '--user', '--upgrade',
+                'bottle', 'Pillow', 'requests']) != 0:
+                have_pip = False
+                print 'install: Not successful.'
+            else:
+                print 'install: Successful'
     if have_easy_install and (not have_pip or check_python_deps()):
-        easy_install.main(['--user', '--upgrade', 'bottle', 'PIL', 'requests'])
+        print 'install: Installing dependencies via easy_install...'
+        easy_install.main(['--user', '--upgrade',
+            'bottle', 'Pillow', 'requests'])
     failures = check_python_deps()
+    if failures:
+        print 'install: Some dependencies are still not installed.'
+    else:
+        print 'install: All dependencies installed.'
     if 'bottle' in failures:
+        print 'install: Source-installing bottle.'
         import urllib2
         open(pjoin(pjoin(INSTALL_PATH, 'utils'), 'bottle.py'), 'w').write(
                 urllib2.urlopen('https://bottlepy.org/bottle.py').read())
-    if 'PIL' in failures:
-        print 'Warning: Could not install PIL. Some modules will not work.'
+    if 'Pillow' in failures:
+        print ('install: Warning: Could not install Pillow. Some modules'
+                + ' will not work.')
     if 'requests' in failures:
-        print ('Warning: Could not install requests. Some modules will not'
-                + ' work.')
+        print ('install: Warning: Could not install requests. Some modules'
+                + ' will not work.')
 
-def install(args):
-    if args.deps:
-        install_python_deps()
+def get_base_arg_list(args):
     base_arg_list = ['--page', args.page]
     if args.force:
         base_arg_list.append('--force')
     if not args.interactive:
         base_arg_list.append('--non-interactive')
+    return base_arg_list
+
+def install(args):
+    if args.deps:
+        install_python_deps()
+    base_arg_list = get_base_arg_list(args)
     def do_subcommand(func, name):
-        func(ARG_PARSER.parse_args(base_arg_list + [name]))
-    do_subcommand(config, 'config')
-    do_subcommand(copyright, 'copyright')
-    do_subcommand(header, 'header')
+        return func(ARG_PARSER.parse_args(base_arg_list + [name]))
+    status = do_subcommand(config, 'config')
+    if status:
+        return status
+    status = do_subcommand(copyright, 'copyright')
+    if status:
+        return status
+    status = do_subcommand(header, 'header')
+    if status:
+        return status
+    return 0
+
+def upgrade(args):
+    import subprocess
+    command = ['sh', os.path.realpath(pjoin(INSTALL_PATH, '_install_ts.sh'))]
+    command.extend(get_base_arg_list(args))
+    command.append('install')
+    if not args.deps:
+        command.append('--no-deps')
+    if subprocess.call(['which', 'git']) == 0:
+        git = 'git'
+    else:
+        git = os.path.expanduser('~/bin/git')
+    status = subprocess.call([git, 'pull'], cwd=INSTALL_PATH)
+    if status == 0:
+        return subprocess.call(command, cwd=SITE_PATH)
+    else:
+        return status
 
 def _create_parser():
     parser = argparse.ArgumentParser(
@@ -561,6 +643,11 @@ def _create_parser():
             help='Install TachibanaSite.')
     install_parser.add_argument('-m', '--no-deps', action='store_false',
             dest='deps', help="Don't attempt to install dependencies.")
+    # Upgrade Subcommand
+    upgrade_parser = subparsers.add_parser('upgrade',
+            help='Upgrade TachibanaSite.')
+    upgrade_parser.add_argument('-m', '--no-deps', action='store_false',
+            dest='deps', help="Don't attempt to install dependencies.")
     return parser
 
 ARG_PARSER = _create_parser()
@@ -573,8 +660,12 @@ def main():
         status = config(args)
     elif args.subcommand == 'copyright':
         status = copyright(args)
+    elif args.subcommand == 'header':
+        status = header(args)
     elif args.subcommand == 'install':
         status = install(args)
+    elif args.subcommand == 'upgrade':
+        status = upgrade(args)
     else:
         print 'Unknown subcommand.'
         status = 1
