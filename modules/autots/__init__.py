@@ -36,6 +36,7 @@ import os.path
 from os.path import dirname
 from os.path import join as pjoin
 import re
+import subprocess
 import urllib
 
 DIRNAME0 = dirname(os.path.realpath(__file__))
@@ -426,8 +427,9 @@ def copyright(args):
 
 def create(args):
     ask = Asker(args.interactive)
-    page_path = pjoin(SITE_PATH,
-            'home' if args.page == 'common' else args.page)
+    page = ask.string('Where do you want to create the page?',
+            None if args.page == 'common' else args.page, 'home')
+    page_path = pjoin(SITE_PATH, page)
     index_php = pjoin(page_path, 'index.php')
     source_lines = read_existing(index_php, ask, args.force)
     if source_lines is None:
@@ -441,32 +443,133 @@ def create(args):
             "include '{}'; ?>".format(ini_quote_path(fsp_path))]
     return show_confirm_write(index_php, index_php_lines, ask)
 
+def get_base_arg_list(args):
+    base_arg_list = ['--page', args.page]
+    if args.force:
+        base_arg_list.append('--force')
+    if not args.interactive:
+        base_arg_list.append('--non-interactive')
+    return base_arg_list
+
+def edit(args):
+    ask = Asker(args.interactive)
+    page_path = pjoin(SITE_PATH, args.page)
+    index_md = pjoin(page_path, 'index.markdown')
+    index_md_tpl = pjoin(page_path, 'index.markdown.template')
+    template = ask.yes_no('Enable embedded python in this file?',
+            args.template, default_arg(not os.path.isfile(index_md), True))
+    if template and os.path.isfile(index_md):
+        os.rename(index_md, index_md_tpl)
+    elif not template and os.path.isfile(index_md_tpl):
+        os.rename(index_md_tpl, index_md)
+    if template:
+        index_md = index_md_tpl
+    if (not os.path.isfile(pjoin(page_path, 'index.php')) and
+            args.page != 'common'):
+        base_arg_list = get_base_arg_list(args)
+        create(ARG_PARSER.parse_args())
+    if args.interactive:
+        env_editor = os.getenv('EDITOR')
+        if args.editor is not None:
+            editor = args.editor
+        elif env_editor:
+            editor = env_editor
+        else:
+            editors = ['nano', 'nvim', 'vim', 'emacs', 'vi']
+            for e in editors:
+                if subprocess.call(['which', e]) == 0:
+                    editor = e
+                    break
+            else:
+                editor = 'nano'
+        command = [editor]
+        if 'vim' in command:
+            command.append('+set ft=markdown nocp')
+        command.append(index_md)
+        subprocess.call(command)
+    print 'Done.'
+
+def get_page_erasure(page_path):
+    files_to_delete = []
+    dirs_to_delete = []
+    for root, dirnames, filenames in os.walk(page_path):
+        if root == page_path:
+            files_to_delete.extend(filenames)
+        elif 'index.php' in filenames:
+            del dirnames[:]
+            ancestor = os.path.dirname(root)
+            while ancestor != page_path:
+                try:
+                    dirs_to_delete.remove(ancestor)
+                except ValueError:
+                    print 'ERROR: Could not whitelist:'
+                    print '    {}'.format(ancestor)
+                    print '  Ancestor of:'
+                    print '    {}'.format(root)
+                    print 'It is recommended you do not proceed.'
+                next_ancestor = os.path.dirname(page_path)
+                if next_ancestor == ancestor:
+                    break
+                ancestor = next_ancestor
+        else:
+            dirs_to_delete.append(root)
+    files_to_delete.sort()
+    dirs_to_delete.sort()
+    print 'The following files will be deleted:'
+    for filename in files_to_delete:
+        print '  {}'.format(filename)
+    print 'The following directories will be deleted:'
+    for dirname in dirs_to_delete:
+        print '  {}'.format(dirname)
+    return files_to_delete, dirs_to_delete
+
 def delete(args):
     import shutil
     ask = Asker(args.interactive)
-    page = ask.string('What page do you want to delete? ',
+    page = ask.string('What page do you want to delete?',
             None if args.page == 'common' else args.page, 'common')
     if page == 'common':
         print 'Refusing to delete the common directory. If you want to'
         print 'remove TachibanaSite, you can just delete the site directory.'
         print 'Aborting.'
         return 1
-    page_path = pjoin(SITE_PATH, args.page)
+    page_path = pjoin(SITE_PATH, page)
+    if not os.path.lexists(page_path):
+        print 'There is no such page: {}. Aborting.'.format(page)
+        return 1
     do_deletion = None
     if os.path.islink(page_path):
-        if ask.yes_no('{} is a link. Follow it?', args.follow_link, False):
+        old_page_path = page_path
+        def ask_delete_link():
+            if ask.yes_no('Do you want to delete the link?',
+                    args.recursive, False):
+                print 'The link {} will be deleted.'.format(old_page_path)
+                return lambda: os.remove(old_page_path)
+            else:
+                print 'Refusing to delete symlinked page. Aborting.'
+                return None
+        if ask.yes_no('{} is a link. Follow it?'.format(page),
+                args.follow_link, False):
             page_path = os.path.realpath(page_path)
-        elif ask.yes_no('Do you want to delete the link?', args.recursive,
-                False):
-            print 'The link {} will be deleted.'.format(page_path)
-            do_deletion = lambda: os.remove(page_path)
+            if not os.path.isdir(page_path):
+                print 'No such directory: {}'.format(page_path)
+                do_deletion = ask_delete_link()
+                if do_deletion is None:
+                    return 1
         else:
-            print 'Refusing to delete symlinked page. Aborting.'
-            return 1
+            do_deletion = ask_delete_link()
+            if do_deletion is None:
+                return 1
+    else:
+        page_path = os.path.realpath(page_path)
+    if not os.path.isdir(page_path):
+        print 'No such directory: {}'.format(page_path)
+        print 'Aborting.'
+        return 1
     if do_deletion is None:
         has_subpages = False
         for root, dirnames, filenames in os.walk(page_path):
-            if 'index.php' in filenames and os.path.realpath(root) != page_path:
+            if 'index.php' in filenames and root != page_path:
                 has_subpages = True
                 break
         recursive = True
@@ -475,13 +578,18 @@ def delete(args):
             recursive = ask.yes_no('Do you also want to delete subpages?',
                     args.recursive, False)
             if not recursive:
-                erase = ask.yes_no(('Erase all non-subpage content that may be' +
-                    ' used by subpages?'), args.erase, False)
+                erase = ask.yes_no(('Erase all non-subpage content that may be'
+                    + ' used by subpages?'), args.erase, False)
         if recursive:
             print 'The directory {} will be deleted.'.format(page_path)
             do_deletion = lambda: shutil.rmtree(page_path)
         elif erase:
-            pass # TODO
+            files_to_delete, dirs_to_delete = get_page_erasure(page_path)
+            def do_deletion():
+                for filename in files_to_delete:
+                    os.remove(filename)
+                for dirname in dirs_to_delete:
+                    shutil.rmtree(dirname)
         else:
             index_php = pjoin(page_path, 'index.php')
             print 'The file {} will be deleted.'.format(index.php)
@@ -603,14 +711,6 @@ def install_python_deps():
         print ('install: Warning: Could not install requests. Some modules'
                 + ' will not work.')
 
-def get_base_arg_list(args):
-    base_arg_list = ['--page', args.page]
-    if args.force:
-        base_arg_list.append('--force')
-    if not args.interactive:
-        base_arg_list.append('--non-interactive')
-    return base_arg_list
-
 def install(args):
     if args.deps:
         install_python_deps()
@@ -630,7 +730,6 @@ def install(args):
     return 0
 
 def upgrade(args):
-    import subprocess
     command = ['sh', os.path.realpath(pjoin(INSTALL_PATH, '_install_ts.sh'))]
     command.extend(get_base_arg_list(args))
     command.append('install')
@@ -694,7 +793,6 @@ def _create_parser():
                 action='store_const', const=True, help='Enable templating.')
     config_parser.add_argument('--theme-ini', nargs='*',
             help='Additional lines of INI after [Theme].')
-    # Content Subcommand
     # Copyright Subcommand
     copyright_parser = subparsers.add_parser('copyright',
             help='Set copyright information.')
@@ -703,6 +801,15 @@ def _create_parser():
     # Create Subcommand
     create_parser = subparsers.add_parser('create', help=('Create a page.' +
         ' Note: Attempting to create page "common" will create page "home."'))
+    # Edit Subcommand
+    edit_parser = subparsers.add_parser('edit',
+            help='Edit a page, creating it if it does not exist.')
+    edit_parser.add_argument('-e', '--editor',
+            help='The editor to use (e.g. nano, vim, emacs).')
+    edit_parser.add_argument('-m', '--no-template', action='store_const',
+            const=False, dest='template', help='Disable embedded python.')
+    edit_parser.add_argument('-t', '--template', action='store_const',
+            const=True, help='Use SimpleTemplate syntax to embed python.')
     # Delete Subcommand
     delete_parser = subparsers.add_parser('delete', help='Delete a page.')
     delete_parser.add_argument('-e', '--erase', '--always-erase',
@@ -745,6 +852,8 @@ def main():
         status = copyright(args)
     elif args.subcommand == 'create':
         status = create(args)
+    elif args.subcommand == 'edit':
+        status = edit(args)
     elif args.subcommand == 'delete':
         status = delete(args)
     elif args.subcommand == 'header':

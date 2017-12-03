@@ -2,6 +2,11 @@ Server software for <https://tachibanatech.com/> and <http://afrl.cse.sc.edu/>.
 
 Documentation at <https://tachibanatech.com/ts/>.
 
+# TODO
+
+-   AutoTS
+-   Less JS, actually finally doing caching
+
 # Version History
 
 ## 1.8.2
