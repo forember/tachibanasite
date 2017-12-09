@@ -33,7 +33,7 @@ cd tachibanasite
 git submodule update --init --recursive
 cd ..
 # Convenience symlink
-[ -h autots ] || ln -s tachibanasite/modules/autots/__init__.py autots
+[ -h autots ] || ln -s tachibanasite/modules/autots/__main__.py autots
 # Install or execute the provided subcommand
 # Do not exit on failure; the next section should always run.
 set +e
