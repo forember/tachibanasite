@@ -1,13 +1,13 @@
 #!/usr/bin/env python2
 '''
-    File:   ./modules/autots/__init__.py
+    File:   ./modules/autots/__main__.py
     Author: Chris McKinney
-    Edited: Nov 17 2017
+    Edited: Dec 09 2017
     Editor: Chris McKinney
 
     Description:
 
-    Script for managing a TachibanaSite install.
+    Bootstraps autots.
 
     Edit History:
 
@@ -31,12 +31,16 @@
 '''
 
 try:
+    # Works if imported as a module
     from . import main
 except ValueError:
+    # Add the tachibanasite modules directory to the python path
     from os.path import dirname, realpath
     import sys
     sys.path.append(dirname(dirname(realpath(__file__))))
+    # Import using the package name
     from autots import main
 
 if __name__ == '__main__':
+    # Execute main
     raise SystemExit(main())

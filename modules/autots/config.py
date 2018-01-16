@@ -1,12 +1,12 @@
 '''
     File:   ./modules/autots/config.py
     Author: Chris McKinney
-    Edited: Nov 17 2017
+    Edited: Dec 09 2017
     Editor: Chris McKinney
 
     Description:
 
-    Script for managing a TachibanaSite install.
+    Manages common/config.ini.
 
     Edit History:
 
@@ -32,6 +32,11 @@
 from .utils import *
 
 def parse_config(source_lines):
+    '''Parse a TachibanaSite config.ini.
+
+    :param source_lines: A sequence of lines from a config.ini.
+    TODO
+    '''
     def match_source(pattern, group=0, filt=lambda s: s):
         return match_line(source_lines, pattern, group, filt)
     source = argparse.Namespace()

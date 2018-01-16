@@ -1,7 +1,7 @@
 '''
     File:   ./modules/autots/utils.py
     Author: Chris McKinney
-    Edited: Nov 17 2017
+    Edited: Dec 09 2017
     Editor: Chris McKinney
 
     Description:

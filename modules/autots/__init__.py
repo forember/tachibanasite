@@ -1,7 +1,7 @@
 '''
     File:   ./modules/autots/__init__.py
     Author: Chris McKinney
-    Edited: Nov 17 2017
+    Edited: Dec 09 2017
     Editor: Chris McKinney
 
     Description:
@@ -29,14 +29,20 @@
     limitations under the License.
 '''
 
-from .arg_parser import ARG_PARSER
-from .config import config
-from .delete import delete
-from .edit import create, edit
-from .install import install, upgrade
-from .overrides import copyright, header
-
 def main():
+    '''Entry point for autots.
+
+    Reads arguments from sys.argv. Run `python2 -m autots -h` for usage.
+
+    Returns a status code to be passed to `raise SystemExit()`.
+    '''
+    # Importing in the function prevents polluting the package namespace
+    from .arg_parser import ARG_PARSER
+    from .config import config
+    from .delete import delete
+    from .edit import create, edit
+    from .install import install, upgrade
+    from .overrides import copyright, header
     # Parse and Execute
     args = ARG_PARSER.parse_args()
     print 'AUTOTS Alpha'

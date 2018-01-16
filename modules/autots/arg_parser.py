@@ -1,12 +1,12 @@
 '''
     File:   ./modules/autots/arg_parser.py
     Author: Chris McKinney
-    Edited: Nov 17 2017
+    Edited: Dec 09 2017
     Editor: Chris McKinney
 
     Description:
 
-    Script for managing a TachibanaSite install.
+    The argument parser for autots.
 
     Edit History:
 
@@ -33,6 +33,8 @@ import argparse
 from .utils import FORCE_TEMPLATES
 
 def get_base_arg_list(args):
+    '''Return a list of string global arguments based on an argparse object.
+    '''
     base_arg_list = ['--page', args.page]
     if args.force:
         base_arg_list.append('--force')
