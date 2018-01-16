@@ -2,12 +2,29 @@ Server software for <https://tachibanatech.com/> and <http://afrl.cse.sc.edu/>.
 
 Documentation at <https://tachibanatech.com/ts/>.
 
+# Install via AutoTS
+
+**WARNING:** AutoTS is still *very* alpha. For a traditional install, see
+<https://tachibanatech.com/ts/install/>.
+
+Go into the directory where you want your site, and run:
+
+```bash
+curl https://raw.githubusercontent.com/NighttimeDriver50000/tachibanasite/master/_install_ts.sh | sh
+```
+
+Then follow the on-screen instructions.
+
 # TODO
 
 -   AutoTS
 -   Less JS, actually finally doing caching
 
 # Version History
+
+## 1.8.3
+
+-   Alpha AutoTS
 
 ## 1.8.2
 
