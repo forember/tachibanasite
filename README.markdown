@@ -10,7 +10,8 @@ Documentation at <https://tachibanatech.com/ts/>.
 Go into the directory where you want your site, and run:
 
 ```bash
-curl https://raw.githubusercontent.com/NighttimeDriver50000/tachibanasite/master/_install_ts.sh | sh
+curl -O https://raw.githubusercontent.com/NighttimeDriver50000/tachibanasite/master/_install_ts.sh
+sh _install_ts.sh
 ```
 
 Then follow the on-screen instructions.
