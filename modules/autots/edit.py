@@ -51,6 +51,7 @@ def create(args):
     return show_confirm_write(index_php, index_php_lines, ask)
 
 def edit(args):
+    import subprocess
     ask = Asker(args.interactive)
     page_path = pjoin(SITE_PATH, args.page)
     index_md = pjoin(page_path, 'index.markdown')

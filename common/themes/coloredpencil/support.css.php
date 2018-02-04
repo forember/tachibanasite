@@ -159,6 +159,7 @@ div.sideHeader {
     padding-left: 10px;
     padding-right: 10px;
     font-size: 85%;
+    border-radius: 4px;
 }
 #navcontent {
     border-right: solid <?=$text?> 2pt;

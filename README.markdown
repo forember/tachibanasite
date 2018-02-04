@@ -23,6 +23,10 @@ Then follow the on-screen instructions.
 
 # Version History
 
+## 1.8.4
+
+-   Bug fixes
+
 ## 1.8.3
 
 -   Alpha AutoTS
