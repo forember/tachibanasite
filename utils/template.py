@@ -2,7 +2,7 @@
 '''
     File:   ./utils/template.py
     Author: Chris McKinney
-    Edited: Jul 14 2017
+    Edited: May 19 2018
     Editor: Chris McKinney
 
     Description:
@@ -14,6 +14,8 @@
     0.8.10  - Added module support.
 
     1.7.14  - Added ability to disable modules.
+
+    1.8.5   - modules dir not required.
 
     License:
 
@@ -55,8 +57,11 @@ def _get_tpl_lib_bindings():
     from configIniUtils import get_config
     install_path = dirname(dirname(realpath(__file__)))
     modules_path = os.path.join(install_path, 'modules')
-    sys.path.append(modules_path)
-    module_names = os.listdir(modules_path)
+    if os.path.isdir(modules_path):
+        sys.path.append(modules_path)
+        module_names = os.listdir(modules_path)
+    else:
+        module_names = []
     module_names.sort()
     bindings = []
     for name in module_names:

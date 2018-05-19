@@ -23,6 +23,10 @@ Then follow the on-screen instructions.
 
 # Version History
 
+## 1.8.5
+
+-   Fixed crash if the modules directory doesn't exist
+
 ## 1.8.4
 
 -   Bug fixes
