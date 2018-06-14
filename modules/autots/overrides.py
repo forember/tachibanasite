@@ -66,7 +66,7 @@ def header(args):
     source = argparse.Namespace()
     source.linked, source.header = match_line(source_lines,
             r'# (\[)?(.*)(?(1)\]\(\{\{base\}\}/\))',
-            (1, 2), ini_unquote_html)
+            (1, 2), lambda s: None if s is None else ini_unquote_html(s))
     if source.header is not None:
         source.linked = bool(source.linked)
     # Ask for Header and Linked

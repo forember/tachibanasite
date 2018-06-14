@@ -23,6 +23,11 @@ Then follow the on-screen instructions.
 
 # Version History
 
+## 1.8.7
+
+-   Re-enabled UTF-8 for template files
+-   Fixed a crash in AutoTS when the header is not a link
+
 ## 1.8.6
 
 -   Added HTML mode for email obfuscation
