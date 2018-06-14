@@ -23,6 +23,12 @@ Then follow the on-screen instructions.
 
 # Version History
 
+## 1.8.6
+
+-   Added HTML mode for email obfuscation
+-   Added a non-markdown template function
+-   Began work on Bold theme
+
 ## 1.8.5
 
 -   Fixed crash if the modules directory doesn't exist

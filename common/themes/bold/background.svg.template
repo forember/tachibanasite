@@ -1,0 +1,28 @@
+% import random
+% size = 10
+<svg viewBox="0 0 {{size}} {{size}}" xmlns="http://www.w3.org/2000/svg"
+        width="576" height="576">
+% def gen_triangle(x, y, rand=None):
+    % clip = lambda a: max(0, min(size, a))
+    % if rand is None:
+        % rand = round(random.triangular(-2, 2))
+    % end
+    % alpha = abs(rand) / (16.0 if rand > 0 else 8.0)
+    % value = 255 if rand > 0 else 0
+    <polygon fill="rgba({{value}}, {{value}}, {{value}}, {{alpha}})"
+    % if (y % 2) ^ (x % 2):
+            points="{{clip(x-1)}},{{y}} {{clip(x+1)}},{{y}} {{x}},{{y+1}}" />
+    % else:
+            points="{{x}},{{y}} {{clip(x+1)}},{{y+1}} {{clip(x-1)}},{{y+1}}" />
+    % end
+    % return rand
+% end
+% for y in range(0, size):
+    % r = gen_triangle(0, y)
+    % gen_triangle(size, y, r)
+    % for x in range(1, size):
+        % gen_triangle(x, y)
+    % end
+% end
+</svg>
+<!-- vim: set ft=svg : -->

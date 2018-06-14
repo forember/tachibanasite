@@ -45,7 +45,7 @@ function deobfuscateEmail(t, mailto) {
 
 window.loadActions.push(function() {
     var emailRegex = /^@@([jkhinolmbc]{4})<code>([%\/_.\-a-zA-Z0-9]+)<\/code>\1@@$/;
-    $('a').each(function() {
+    $('a, .email').each(function() {
         var href = $(this).attr('href');
         var hrefm = emailRegex.exec(href);
         if (hrefm != null) {

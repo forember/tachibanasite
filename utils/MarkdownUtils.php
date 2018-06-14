@@ -98,6 +98,9 @@ function urlCommon($filename) {
         }
     }
     if (file_exists("$sitePath/common/$filename")) {
+        if ($siteURL == '/') {
+            return "/common/$filename";
+        }
         return "$siteURL/common/$filename";
     } else {
         return "$installURL/common/$filename";
@@ -109,14 +112,19 @@ function mdCommon($filename) {
     return md(pathCommon($filename));
 }
 
-// Process a file as a Markdown SimpleTemplate.
-function mdTpl($filename) {
+// Process a file as a SimpleTemplate.
+function tpl($filename) {
     $installPath = realpath(__DIR__ . '/..');
     $arg1 = escapeshellarg("$installPath/utils/template.py");
     $arg2 = escapeshellarg(json_encode($_GET));
     $arg3 = escapeshellarg($filename);
     //echo "<!-- python2 $arg1 $arg2 $arg3 -->";
-    return mdText(shell_exec("python2 $arg1 $arg2 $arg3 2>&1"));
+    return shell_exec("python2 $arg1 $arg2 $arg3 2>&1");
+}
+
+// Process a file as a Markdown SimpleTemplate.
+function mdTpl($filename) {
+    return mdText(tpl($filename));
 }
 
 // Get a common override file path, with checks for template files

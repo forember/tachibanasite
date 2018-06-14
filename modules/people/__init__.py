@@ -125,16 +125,16 @@ def make_person_url(host, about_loc, protocol=DEFAULT_PROTOCOL,
 EMAIL_OBFUSCATION_COUNTER = 1024
 EMAIL_RE = re.compile(r'(mailto:)?[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+')
 
-def obfuscate_email(email_string):
+def obfuscate_email(email_string, html_mode=False):
     '''Obfuscate a string.'''
     global EMAIL_OBFUSCATION_COUNTER
     import urllib
     EMAIL_OBFUSCATION_COUNTER += 15
     obfct = lambda: ''.join([chr((ord(c) + 32) ^ 0x3a)
         for c in str(EMAIL_OBFUSCATION_COUNTER)])
-    return ('@@' + obfct() + '``'
+    return ('@@' + obfct() + ('<code>' if html_mode else '``')
             + urllib.quote(''.join([chr(ord(c) ^ 0x1f) for c in email_string]))
-            + '``' + obfct() + '@@')
+            + ('</code>' if html_mode else '``') + obfct() + '@@')
 
 def obfuscate_emails(page_seg):
     '''Obfuscate the email addresses in a string.'''
