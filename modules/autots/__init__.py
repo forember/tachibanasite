@@ -42,6 +42,7 @@ def main():
     from .delete import delete
     from .edit import create, edit
     from .install import install, upgrade
+    from .lists import navlist, sidebar
     from .overrides import copyright, header
     # Parse and Execute
     args = ARG_PARSER.parse_args()
@@ -60,8 +61,12 @@ def main():
         status = header(args)
     elif args.subcommand == 'install':
         status = install(args)
+    elif args.subcommand == 'navlist':
+        status = navlist(args)
     elif args.subcommand == 'upgrade':
         status = upgrade(args)
+    elif args.subcommand == 'sidebar':
+        status = sidebar(args)
     else:
         print 'Unknown subcommand.'
         status = 1

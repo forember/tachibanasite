@@ -129,11 +129,21 @@ def _create_parser():
             help='Install TachibanaSite.')
     install_parser.add_argument('-m', '--no-deps', action='store_false',
             dest='deps', help="Don't attempt to install dependencies.")
+    # Navlist Subcommand
+    navlist_parser = subparsers.add_parser('navlist',
+            help='Set the items in the nav list.')
+    navlist_parser.add_argument('-e', '--editor',
+            help='The editor to use (e.g. nano, vim, emacs).')
     # Upgrade Subcommand
     upgrade_parser = subparsers.add_parser('upgrade',
             help='Upgrade TachibanaSite.')
     upgrade_parser.add_argument('-m', '--no-deps', action='store_false',
             dest='deps', help="Don't attempt to install dependencies.")
+    # Sidebar Subcommand
+    sidebar_parser = subparsers.add_parser('sidebar',
+            help='Set the items in the sidebar.')
+    sidebar_parser.add_argument('-e', '--editor',
+            help='The editor to use (e.g. nano, vim, emacs).')
     return parser
 
 ARG_PARSER = _create_parser()
