@@ -18,10 +18,22 @@ Then follow the on-screen instructions.
 
 # TODO
 
--   AutoTS
--   Less JS, actually finally doing caching
+-   Redo theme CSS
+-   Update documentation
+-   Improve AutoTS
+-   Finally doing caching
 
 # Version History
+
+## 1.9.0
+
+-   Default theme is now Colored Pencil
+-   Templates enabled by default
+-   Bootstrap 4 and full highlight.js now enabled by default
+-   Removed `theme.js` support from themes (may be re-added in the future)
+-   Removed the following themes: bootstrap, default, and paper
+-   Removed the Bootstrap 3 and Bootstrapify modules
+-   `markdown_content.css` and `support.css.php` now fall back to coloredpencil
 
 ## 1.8.8
 

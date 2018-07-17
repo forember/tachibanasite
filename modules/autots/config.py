@@ -196,8 +196,8 @@ def config(args):
     # Theme
     if args.theme is None:
         theme = ask.choice('Available default themes:', 'Select a theme',
-                ['default', 'coloredpencil', 'bootstrap', 'paper',
-                    'barebones'], default_arg(source.theme, 'coloredpencil'))
+                ['coloredpencil', 'bold', 'barebones'],
+                default_arg(source.theme, 'coloredpencil'))
     else:
         theme = ask.string('Theme name', args.theme,
                 default_arg(source.theme, 'coloredpencil'))

@@ -47,7 +47,7 @@ function get_theme_path($name) {
 }
 
 // Get a file path in the active theme, loading from default if not found.
-function get_theme_path_wfallback($name, $defaultThemeName = 'default') {
+function get_theme_path_wfallback($name, $defaultThemeName = 'coloredpencil') {
     $path = get_theme_path($name);
     if (!file_exists($path)) {
         $path = pathCommon("themes/$defaultThemeName/$name");
@@ -61,9 +61,18 @@ function get_theme_url($name) {
     return urlCommon("themes/$themeName/$name");
 }
 
+// Get a URL in the active theme, loading from default if not found.
+function get_theme_url_wfallback($name, $defaultThemeName = 'coloredpencil') {
+    if (file_exists(get_theme_path($name))) {
+        return get_theme_url($name);
+    } else {
+        return urlCommon("themes/$defaultThemeName/$name");
+    }
+}
+
 // Get a URL for the given color theme.
 function theme_support_url($theme) {
-    $url = get_theme_url('support.css.php') . '?';
+    $url = get_theme_url_wfallback('support.css.php') . '?';
     $first = True;
     foreach ($theme as $name => $value) {
         if ($first) {

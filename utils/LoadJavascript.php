@@ -69,7 +69,6 @@ function get_js_url_array() {
     $urls = array(
         100 => 'https://code.jquery.com/jquery-1.12.0.min.js',
         200 => "$installURL/utils/utils.js",
-        800 => get_theme_url('theme.js')
     );
     return get_url_array('js', $urls);
 }
@@ -82,7 +81,7 @@ function echo_script_tags() {
 
 function get_css_url_array() {
     $urls = array(
-        400 => get_theme_url('markdown-content.css'),
+        400 => get_theme_url_wfallback('markdown-content.css'),
     );
     return get_url_array('css', $urls);
 }
