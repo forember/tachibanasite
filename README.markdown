@@ -22,6 +22,7 @@ Then follow the on-screen instructions.
 -   Update documentation
 -   Improve AutoTS
 -   Finally doing caching
+-   Upgrade to Python 3
 
 # Version History
 
@@ -32,6 +33,10 @@ Then follow the on-screen instructions.
 -   Pulled php-markdown submodule
 
 ## 1.9.0
+
+**WARNING:** The 1.9.x versions are going to be a run-up to a 2.0 release. They
+are going to change a lot of things, so unless you want to come on this ride
+with me, stick with 1.8.8 for now.
 
 -   Default theme is now Colored Pencil
 -   Templates enabled by default
