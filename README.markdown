@@ -16,13 +16,14 @@ sh _install_ts.sh
 
 Then follow the on-screen instructions.
 
-# TODO
+# TODO for 2.0
 
 -   Redo theme CSS
 -   Update documentation
 -   Improve AutoTS
 -   Finally doing caching
 -   Upgrade to Python 3
+-   Recursive config.ini loading
 
 # Version History
 
