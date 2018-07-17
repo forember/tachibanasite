@@ -1,20 +1,5 @@
 <?php
 /*
-    File:   ./common/themes/bootstrap/StandardPage.php
-    Author: Chris McKinney
-    Edited: Jul 14 2017
-    Editor: Chris McKinney
-
-    Description:
-
-    The default standard page for a TachibanaSite webpage.
-
-    Edit History:
-
-    1.7.14  - Copied from default and added meta tags.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

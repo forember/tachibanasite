@@ -1,22 +1,5 @@
 <?php
 /*
-    File:   ./utils/Theme.php
-    Author: Chris McKinney
-    Edited: May 21 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Utility for getting colored theme URLs.
-
-    Edit History:
-
-    0.5.21  - Added theme URL to config file.
-            - Added utilities for locating the theme.
-            - Added utilities for loading theme options.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

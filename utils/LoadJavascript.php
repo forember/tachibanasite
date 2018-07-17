@@ -1,25 +1,5 @@
 <?php
 /*
-    File:   ./utils/LoadJavascript.php
-    Author: Chris McKinney
-    Edited: Jul 14 2017
-    Editor: Chris McKinney
-
-    Description:
-
-    Utilities to load javascript and CSS for the whole site.
-
-    Edit History:
-
-    0.5.21  - Created to handle new spread-out js.
-
-    0.8.10  - Added module support.
-            - Added CSS loading.
-
-    1.7.14  - Added the ability to disable modules.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

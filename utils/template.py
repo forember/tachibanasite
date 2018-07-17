@@ -1,24 +1,5 @@
 #!/usr/bin/env python2
 '''
-    File:   ./utils/template.py
-    Author: Chris McKinney
-    Edited: May 19 2018
-    Editor: Chris McKinney
-
-    Description:
-
-    Utilities for working with template files.
-
-    Edit History:
-
-    0.8.10  - Added module support.
-
-    1.7.14  - Added ability to disable modules.
-
-    1.8.5   - modules dir not required.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

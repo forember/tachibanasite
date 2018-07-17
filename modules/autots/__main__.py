@@ -1,20 +1,5 @@
 #!/usr/bin/env python2
 '''
-    File:   ./modules/autots/__main__.py
-    Author: Chris McKinney
-    Edited: Dec 09 2017
-    Editor: Chris McKinney
-
-    Description:
-
-    Bootstraps autots.
-
-    Edit History:
-
-    1.9.0   - Created module.
-
-    License:
-
     Copyright 2017 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

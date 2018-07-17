@@ -1,20 +1,4 @@
 /*
-    File:   ./utils/utils.js
-    Author: Chris McKinney
-    Edited: Mar 01 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Javascript utilities.
-
-    Edit History:
-
-    0.5.21  - Moved theme stuff to theme.
-            - Added pluggable interface for window events.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

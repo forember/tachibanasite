@@ -1,21 +1,6 @@
 <?php
 /*
-    File:   ./common/themes/coloredpencil/StandardPageBody.php
-    Author: Chris McKinney
-    Edited: July 14 2017
-    Editor: Chris McKinney
-
-    Description:
-
-    The body for the default standard page for a TachibanaSite webpage.
-
-    Edit History:
-
-    1.7.14  - Created.
-
-    License:
-
-    Copyright 2016 Chris McKinney
+    Copyright 2018 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not
     use this file except in compliance with the License.  You may obtain a copy

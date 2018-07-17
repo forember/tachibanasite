@@ -1,19 +1,4 @@
 '''
-    File:   ./modules/csv2table/__init__.py
-    Author: Chris McKinney
-    Edited: Aug 11 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    csv2table. It's 2am.
-
-    Edit History:
-
-    0.8.11  - Added.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

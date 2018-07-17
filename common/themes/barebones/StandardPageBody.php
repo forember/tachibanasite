@@ -1,20 +1,5 @@
 <?php
 /*
-    File:   ./common/themes/barebones/StandardPageBody.php
-    Author: Chris McKinney
-    Edited: May 21 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    The body for the barebones standard page for a TachibanaSite webpage.
-
-    Edit History:
-
-    1.7.14  - Created. Moved content from standard page.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

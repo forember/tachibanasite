@@ -1,21 +1,4 @@
 /*
-    File:   ./modules/mobiletext/mobiletext.js
-    Author: Chris McKinney
-    Edited: Aug 10 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Crude mobile support.
-
-    Edit History:
-
-    0.8.10  - Created. Moved content from theme.js.
-
-    0.11.24 - Made the container go edge-to-edge.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

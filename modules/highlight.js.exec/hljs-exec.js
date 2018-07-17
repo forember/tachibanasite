@@ -1,21 +1,4 @@
 /*
-    File:   ./modules/highlight.js.exec/hljs-exec.js
-    Author: Chris McKinney
-    Edited: Jul 14 2017
-    Editor: Chris McKinney
-
-    Description:
-
-    Starts highlighting on load.
-
-    Edit History:
-
-    0.8.10  - Created. Moved content from utils.js.
-
-    1.7.14  - Added proper support for the "text" class.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

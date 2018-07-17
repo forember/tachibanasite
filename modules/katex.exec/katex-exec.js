@@ -1,19 +1,4 @@
 /*
-    File:   ./modules/katex.exec/katex-exec.js
-    Author: Chris McKinney
-    Edited: Sep 23 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Automatically converts elements with class "katex" from LaTeX to HTML.
-
-    Edit History:
-
-    0.9.23  - Created to support KaTeX.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

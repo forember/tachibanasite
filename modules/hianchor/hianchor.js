@@ -1,19 +1,4 @@
 /*
-    File:   ./modules/hianchor/hianchor.js
-    Author: Chris McKinney
-    Edited: Aug 10 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Highlights the current anchor.
-
-    Edit History:
-
-    0.12.20 - Created.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

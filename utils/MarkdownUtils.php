@@ -1,24 +1,5 @@
 <?php
 /*
-    File:   ./utils/MarkdownUtils.php
-    Author: Chris McKinney
-    Edited: Aug 10 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Utilities for working with Markdown and template files.
-
-    Edit History:
-
-    0.5.21  - Added common override URL support.
-
-    0.8.10  - Enabled truly common template files.
-
-    0.8.24  - Added template switch and common override recursion.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

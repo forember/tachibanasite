@@ -1,25 +1,4 @@
 '''
-    File:   ./modules/photos/__init__.py
-    Author: Chris McKinney
-    Edited: Aug 22 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Provides utilities for creating thumbnails and displaying them.
-
-    Edit History:
-
-    0.6.20  - Created module.
-
-    0.8.10  - Added TachibanaSite template library bindings.
-
-    0.8.18  - Added more generic photo-and-link function.
-
-    0.8.22  - Added caption and hover filter support.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

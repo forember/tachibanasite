@@ -25,6 +25,12 @@ Then follow the on-screen instructions.
 
 # Version History
 
+## 1.9.1
+
+-   Removed those silly file headers
+-   Updated Bootstrap to 4.1.2 from 4.0.0-beta2
+-   Pulled php-markdown submodule
+
 ## 1.9.0
 
 -   Default theme is now Colored Pencil

@@ -3,21 +3,6 @@
 header('Content-Type: text/css');
 ?>
 /*
-    File:   ./common/themes/coloredpencil/support.css.php
-    Author: Chris McKinney
-    Edited: Jul 14 2017
-    Editor: Chris McKinney
-
-    Description:
-
-    Support for theme for webpages. PHP for color arguments.
-
-    Edit History:
-
-    1.7.14  - Created.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -180,7 +165,7 @@ div.sideHeader {
 #current {
     font-weight: bold;
 }
-footer.well {
+.well {
     background-image: linear-gradient(to bottom,
         rgba(0, 0, 0, <?=1 - 0xe8/255.0?>) 0px,
         rgba(0, 0, 0, <?=1 - 0xf5/255.0?>) 100%);

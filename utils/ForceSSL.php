@@ -1,16 +1,5 @@
 <?php
 /*
-    File:   ./utils/ForceSSL.php
-    Author: Chris McKinney
-    Edited: Mar 01 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Utilities for forcing SSL use.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

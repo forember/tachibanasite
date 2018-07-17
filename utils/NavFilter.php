@@ -1,16 +1,5 @@
 <?php
 /*
-    File:   ./utils/NavFilter.php
-    Author: Chris McKinney
-    Edited: Mar 01 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Filter for the nav list. Also a utility for loading the page title.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

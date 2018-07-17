@@ -1,22 +1,5 @@
 %# vim: set filetype=html :
 %'''
-%   File:   ./modules/photos/twocolumn_thumbnail.markdown.template
-%   Author: Chris McKinney
-%   Edited: Jun 21 2016
-%   Editor: Chris McKinney
-%
-%   Description:
-%
-%   Template for thumbnail columns.
-%
-%   Edit History:
-%
-%   0.8.22  - Added caption and hover filter support.
-%
-%   0.11.24 - Made captions more reasonable.
-%
-%   License:
-%
 %   Copyright 2016 Chris McKinney
 %
 %   Licensed under the Apache License, Version 2.0 (the "License"); you may not

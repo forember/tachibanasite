@@ -1,20 +1,5 @@
 <?php
 /*
-    File:   ./pages/mail-failure/index.php
-    Author: Chris McKinney
-    Edited: May 22 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Test for including the standard page without interference from content.
-
-    Edit History:
-
-    0.5.22  - Moved into pages directory.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

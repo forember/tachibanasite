@@ -1,22 +1,4 @@
 '''
-    File:   ./modules/people/__init__.py
-    Author: Chris McKinney
-    Edited: Aug 10 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Provides person objects and utilities.
-
-    Edit History:
-
-    0.5.21  - Added email obfuscation.
-
-    0.8.10  - Added TachibanaSite template library bindings.
-            - Screwed with localhost stuff to make it work for now.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

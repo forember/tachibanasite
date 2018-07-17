@@ -1,19 +1,4 @@
 '''
-    File:   ./modules/autots/config.py
-    Author: Chris McKinney
-    Edited: Dec 09 2017
-    Editor: Chris McKinney
-
-    Description:
-
-    Manages common/config.ini.
-
-    Edit History:
-
-    1.9.0   - Created module.
-
-    License:
-
     Copyright 2017 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

@@ -1,26 +1,5 @@
 <?php
 /*
-    File:   ./utils/SendMail.php
-    Author: Chris McKinney
-    Edited: May 21 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Sends email from a contact form.
-
-    Edit History:
-
-    0.5.22  - Created to handle contact forms.
-
-    0.8.18  - Made site title generic.
-
-    0.11.24 - Now checks that name, subject, and message are non-empty.
-
-    1.1.29  - Added mail filter.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

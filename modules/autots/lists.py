@@ -1,19 +1,4 @@
 '''
-    File:   ./modules/autots/lists.py
-    Author: Chris McKinney
-    Edited: Jun 14 2018
-    Editor: Chris McKinney
-
-    Description:
-
-    Script for managing a TachibanaSite install.
-
-    Edit History:
-
-    1.9.0   - Created module.
-
-    License:
-
     Copyright 2018 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

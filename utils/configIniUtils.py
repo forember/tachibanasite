@@ -1,21 +1,4 @@
 '''
-    File:   ./utils/configIniUtils.py
-    Author: Chris McKinney
-    Edited: Aug 10 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Utilities for working with the config.ini files.
-
-    Edit History:
-
-    0.8.10  - Added function for install URL.
-
-    1.7.14  - Switched to SafeConfigParser
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not

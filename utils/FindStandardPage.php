@@ -1,20 +1,5 @@
 <?php
 /*
-    File:   ./utils/FindStandardPage.php
-    Author: Chris McKinney
-    Edited: May 21 2016
-    Editor: Chris McKinney
-
-    Description:
-
-    Find and include the standard page.
-
-    Edit History:
-
-    0.5.21  - Moved the standard page into the theme.
-
-    License:
-
     Copyright 2016 Chris McKinney
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not
