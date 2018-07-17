@@ -23,6 +23,12 @@ Then follow the on-screen instructions.
 
 # Version History
 
+## 1.8.8
+
+-   Fixed SSL Forcing
+-   Updated KaTeX and highlight.js
+-   Added a (default disabled) module with all the highlight.js languages
+
 ## 1.8.7
 
 -   Re-enabled UTF-8 for template files
