@@ -18,9 +18,16 @@ Then follow the on-screen instructions.
 
 # TODO for 2.0
 
--   Redo theme CSS (CSS templating?)
--   Improve AutoTS (Graphical?)
+-   Redo theme CSS with templating
+-   Improved and graphical AutoTS
 -   Update documentation
+    -   Document modules
+    -   Provide examples
+    -   Document themes
+-   Theme preview
+-   Embedded python on all eligible files
+-   Smarter default navlist and breadcrumb
+-   Syntax extension modules (e.g. KaTeX &dollar;)
 -   Upgrade to Python 3
 -   Move from INI to TOML
 -   Recursive config loading
