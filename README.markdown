@@ -18,12 +18,13 @@ Then follow the on-screen instructions.
 
 # TODO for 2.0
 
--   Redo theme CSS
+-   Redo theme CSS (CSS templating?)
+-   Improve AutoTS (Graphical?)
 -   Update documentation
--   Improve AutoTS
--   Finally doing caching
 -   Upgrade to Python 3
--   Recursive config.ini loading
+-   Move from INI to TOML
+-   Recursive config loading
+-   Finally doing caching
 
 # Version History
 
