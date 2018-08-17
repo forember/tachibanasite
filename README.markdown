@@ -18,6 +18,7 @@ Then follow the on-screen instructions.
 
 # TODO for 2.0
 
+-   Implement in pure Python with [CGI][]
 -   Redo theme CSS with templating
 -   Improved and graphical AutoTS
 -   Update documentation
@@ -32,6 +33,8 @@ Then follow the on-screen instructions.
 -   Move from INI to TOML
 -   Recursive config loading
 -   Finally doing caching
+
+[CGI]: https://help.dreamhost.com/hc/en-us/articles/217297307-CGI-overview
 
 # Version History
 
