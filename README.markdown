@@ -18,7 +18,8 @@ Then follow the on-screen instructions.
 
 # TODO for 2.0
 
--   Implement in pure Python with [CGI][]
+-   Implement in pure Python 3 with [CGI][]
+-   Switch from Bottle SimpleTemplate to Jinja 2
 -   Redo theme CSS with templating
 -   Improved and graphical AutoTS
 -   Update documentation
@@ -29,7 +30,6 @@ Then follow the on-screen instructions.
 -   Embedded python on all eligible files
 -   Smarter default navlist and breadcrumb
 -   Syntax extension modules (e.g. KaTeX &dollar;)
--   Upgrade to Python 3
 -   Move from INI to TOML
 -   Recursive config loading
 -   Finally doing caching
