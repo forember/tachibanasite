@@ -64,4 +64,4 @@ with me, stick with 1.8.8 for now.
 -   Updated KaTeX and highlight.js
 -   Added a (default disabled) module with all the highlight.js languages
 
-![Pre-1.8.8 version history](oldchanges.markdown)
+[Pre-1.8.8 version history](oldchanges.markdown)
