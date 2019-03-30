@@ -1,11 +1,11 @@
 Server software for <https://tachibanatech.com/> and <http://afrl.cse.sc.edu/>.
 
-Documentation at <https://tachibanatech.com/ts/>.
+Documentation at <https://ttech.click/old-ts-docs/>.
 
 # Install via AutoTS
 
 **WARNING:** AutoTS is still *very* alpha. For a traditional install, see
-<https://tachibanatech.com/ts/install/>.
+<https://ttech.click/old-ts-docs/install>.
 
 Go into the directory where you want your site, and run:
 
