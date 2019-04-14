@@ -78,7 +78,12 @@ def install_python_deps():
                 print 'install: Not successful.'
         if have_pip and (x == 0 or (pip_via_ei and not had_pip)):
             print 'install: Installing dependencies via pip...'
-            if pip.main(['install', '--user', '--upgrade',
+            if hasattr(pip, 'main'):
+                pip_main = pip.main
+            else:
+                import pip._internal
+                pip_main = pip._internal.main
+            if pip_main(['install', '--user', '--upgrade',
                 'bottle', 'Pillow', 'requests']) != 0:
                 have_pip = False
                 print 'install: Not successful.'
