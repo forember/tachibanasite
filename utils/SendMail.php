@@ -35,6 +35,9 @@ function mailFailure() {
     die();
 }
 
+// Contact forms were a horrible idea.
+mailFailure();
+
 if (!($_POST['subject'] && $_POST['name'] && $_POST['message'])) {
     mailFailure();
 }
