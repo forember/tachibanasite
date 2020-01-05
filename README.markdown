@@ -1,4 +1,4 @@
-Server software for <https://tachibanatech.com/> and <http://afrl.cse.sc.edu/>.
+Server software for <https://tachibanatech.com/> and <https://afrl.cse.sc.edu/>.
 
 Documentation at <https://ttech.click/old-ts-docs/>.
 
@@ -37,6 +37,16 @@ Then follow the on-screen instructions.
 [CGI]: https://help.dreamhost.com/hc/en-us/articles/217297307-CGI-overview
 
 # Version History
+
+## 1.10.0
+
+**The only site that will actually be maintained with TachibanaSite is
+[afrl.cse.sc.edu](https://afrl.cse.sc.edu/). TachibanaTech is going to be split
+into multiplpe smaller sites, and will use a different framework. As such,
+these 1.10.x versions will be maintenance releases specifically to support the
+currently-installed AFRL pages.**
+
+-   Disabled all contact forms.
 
 ## 1.9.1
 
