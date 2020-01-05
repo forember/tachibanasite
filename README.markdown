@@ -42,7 +42,7 @@ Then follow the on-screen instructions.
 
 **The only site that will actually be maintained with TachibanaSite is
 [afrl.cse.sc.edu](https://afrl.cse.sc.edu/). TachibanaTech is going to be split
-into multiplpe smaller sites, and will use a different framework. As such,
+into multiple smaller sites, and will use a different framework. As such,
 these 1.10.x versions will be maintenance releases specifically to support the
 currently-installed AFRL pages.**
 
