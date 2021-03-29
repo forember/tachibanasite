@@ -10,7 +10,7 @@ Documentation at <https://ttech.click/old-ts-docs/>.
 Go into the directory where you want your site, and run:
 
 ```bash
-curl -O https://raw.githubusercontent.com/NighttimeDriver50000/tachibanasite/master/_install_ts.sh
+curl -O https://raw.githubusercontent.com/forember/tachibanasite/master/_install_ts.sh
 sh _install_ts.sh
 ```
 
@@ -37,6 +37,12 @@ Then follow the on-screen instructions.
 [CGI]: https://help.dreamhost.com/hc/en-us/articles/217297307-CGI-overview
 
 # Version History
+
+## 1.10.1
+
+-   Compatibility in some instances with [tachi][]'s `_FORM` global.
+
+[tachi]: https://github.com/forember/tachi
 
 ## 1.10.0
 

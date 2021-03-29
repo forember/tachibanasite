@@ -67,9 +67,22 @@ def _get_tpl_lib_bindings():
             continue
     return bindings
 
+class FormEmu:
+    def __init__(self, _GET):
+        self._GET = _GET
+
+    def getlist(self, key):
+        if key.endswith("[]"):
+            return self._GET[key[:-2]]
+        if key not in self._GET:
+            return []
+        else:
+            return [self._GET[key]]
+
 # The default environment for render_template.
 DEFAULT_TEMPLATE_ENV = {
         '_GET': {},
+        '_FORM': FormEmu({}),
         'render_template_env': render_template_env,
         'render_template': render_template,
         }
@@ -82,7 +95,7 @@ def main():
     import json
     get_list = json.loads(sys.argv[1])
     for filename in sys.argv[2:]:
-        print render_template(filename, _GET=get_list)
+        print render_template(filename, _GET=get_list, _FORM=FormEmu(get_list))
 
 if __name__ == '__main__':
     reload(sys)
